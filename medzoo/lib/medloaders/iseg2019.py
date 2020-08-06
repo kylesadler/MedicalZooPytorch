@@ -19,6 +19,7 @@ class MRIDatasetISEG2019(Dataset):
                  load=False):
         # split_id = int(split_id)
         fold_id = int(args.fold_id)
+        print(f'using fold_id {fold_id}')
         """
         :param mode: 'train','val','test'
         :param dataset_path: root dataset folder
