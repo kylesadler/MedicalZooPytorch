@@ -1,6 +1,6 @@
 from medzoo.lib.medloaders.medical_loader_utils import generate_padded_subvolumes
 import torch
-import matplotmedzoo.lib.pyplot as plt
+import matplotlib.lib.pyplot as plt
 import medzoo.lib.augment3D as augment
 
 size = 32
