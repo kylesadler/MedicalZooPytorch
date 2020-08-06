@@ -201,6 +201,7 @@ def generate_padded_subvolumes(full_volume, kernel_dim=(32, 32, 32)):
 
 
 def find_random_crop_dim(full_vol_dim, crop_size):
+    print(full_vol_dim)
     assert full_vol_dim[0] >= crop_size[0], "crop size is too big"
     assert full_vol_dim[1] >= crop_size[1], "crop size is too big"
     assert full_vol_dim[2] >= crop_size[2], "crop size is too big"
