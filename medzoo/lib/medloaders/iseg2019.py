@@ -59,7 +59,6 @@ class MRIDatasetISEG2019(Dataset):
         list_IDsT2 = sorted(glob.glob(os.path.join(self.training_path, '*T2.img')))
         labels = sorted(glob.glob(os.path.join(self.training_path, '*label.img')))
         print(self.training_path)
-        print(list_IDsT1, list_IDsT2, labels)
         self.affine = img_loader.load_affine_matrix(list_IDsT1[0])
 
         if self.mode == 'train':
