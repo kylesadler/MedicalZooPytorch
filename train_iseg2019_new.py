@@ -68,7 +68,7 @@ def get_arguments():
 
     args = parser.parse_args()
 
-    args.save = f'/home/kyle/results/{args.model}/{args.dataset_name}_{args.fold_id}_{utils.datestr()}''
+    args.save = f'/home/kyle/results/{args.model}/{args.dataset_name}_{args.fold_id}_{utils.datestr()}'
     return args
 
 
