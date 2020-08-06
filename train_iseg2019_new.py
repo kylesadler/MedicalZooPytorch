@@ -4,11 +4,11 @@ import os
 
 os.environ["CUDA_VISIBLE_DEVICES"] = "0"
 # Lib files
-import lib.medloaders as medical_loaders
-import lib.medzoo as medzoo
-import lib.train as train
-import lib.utils as utils
-from lib.losses3D import DiceLoss
+import medzoo.lib.medloaders as medical_loaders
+import medzoo.lib.medzoo as medzoo
+import medzoo.lib.train as train
+import medzoo.lib.utils as utils
+from medzoo.lib.losses3D import DiceLoss
 
 seed = 1777777
 
