@@ -41,8 +41,8 @@ def get_arguments():
     parser.add_argument('--dim', nargs="+", type=int, default=(32, 32, 32))
     parser.add_argument('--nEpochs', type=int, default=20000)
     parser.add_argument('--classes', type=int, default=4)
-    parser.add_argument('--samples_train', type=int, default=10)
-    parser.add_argument('--samples_val', type=int, default=10)
+    parser.add_argument('--samples_train', type=int, default=4096)
+    parser.add_argument('--samples_val', type=int, default=512)
     parser.add_argument('--inChannels', type=int, default=2)
     parser.add_argument('--inModalities', type=int, default=2)
     parser.add_argument('--threshold', default=0.0001, type=float)
@@ -56,7 +56,7 @@ def get_arguments():
                         help='learning rate (default: 1e-3)')
     parser.add_argument('--split', default=0.8, type=float, help='Select percentage of training data(default: 0.8)')
     parser.add_argument('--cuda', action='store_true', default=True)
-    parser.add_argument('--loadData', default=False)
+    parser.add_argument('--loadData', default=True)
     parser.add_argument('--resume', default='', type=str, metavar='PATH',
                         help='path to latest checkpoint (default: none)')
     parser.add_argument('--model', type=str, default='UNET3D',

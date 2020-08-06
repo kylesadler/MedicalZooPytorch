@@ -19,6 +19,7 @@ class MRIDatasetISEG2019(Dataset):
     def __init__(self, args, mode, dataset_path='./datasets', crop_dim=(32, 32, 32), split_id=1, samples=1000,
                  load=False):
         # load = False
+        split_id = int(split_id)
         """
         :param mode: 'train','val','test'
         :param dataset_path: root dataset folder
@@ -37,7 +38,7 @@ class MRIDatasetISEG2019(Dataset):
         self.normalization = args.normalization
         self.augmentation = args.augmentation
         self.list = []
-        self.samples = samples
+        self.samples = int(samples)
         self.full_volume = None
         self.save_name = self.root + '/iseg_2019/iseg2019-list-' + mode + '-samples-' + str(samples) + '.txt'
         if self.augmentation:
