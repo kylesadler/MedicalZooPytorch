@@ -1,4 +1,5 @@
 from torch.utils.data import DataLoader
+import medical_image_process as medical_image_process
 
 from .COVIDxdataset import COVIDxDataset
 from .Covid_Segmentation_dataset import COVID_Seg_Dataset
@@ -12,7 +13,6 @@ from .ixi_t1_t2 import IXIMRIdataset
 from .miccai_2019_pathology import MICCAI2019_gleason_pathology
 from .mrbrains2018 import MRIDatasetMRBRAINS2018
 
-import medical_image_process as medical_image_process
 
 def generate_datasets(args, path='.././datasets'):
     params = {'batch_size': args.batchSz,
