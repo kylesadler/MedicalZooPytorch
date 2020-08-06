@@ -37,9 +37,9 @@ def main():
 
 def get_arguments():
     parser = argparse.ArgumentParser()
-    parser.add_argument('--batchSz', type=int, default=64)
+    parser.add_argument('--batchSz', type=int, default=8)
     parser.add_argument('--dataset_name', type=str, default="iseg2019")
-    parser.add_argument('--dim', nargs="+", type=int, default=(32, 32, 32))
+    parser.add_argument('--dim', nargs="+", type=int, default=(64, 64, 64))
     parser.add_argument('--nEpochs', type=int, default=20000)
     parser.add_argument('--classes', type=int, default=4)
 
