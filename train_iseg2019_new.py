@@ -39,7 +39,7 @@ def get_arguments():
     parser.add_argument('--batchSz', type=int, default=2)
     parser.add_argument('--dataset_name', type=str, default="iseg2019")
     parser.add_argument('--dim', nargs="+", type=int, default=(32, 32, 32))
-    parser.add_argument('--nEpochs', type=int, default=200)
+    parser.add_argument('--nEpochs', type=int, default=20000)
     parser.add_argument('--classes', type=int, default=4)
     parser.add_argument('--samples_train', type=int, default=10)
     parser.add_argument('--samples_val', type=int, default=10)
@@ -68,8 +68,7 @@ def get_arguments():
 
     args = parser.parse_args()
 
-    args.save = './saved_models/' + args.model + '_checkpoints/' + args.model + '_{}_{}_'.format(
-        utils.datestr(), args.dataset_name)
+    args.save = f'/home/kyle/results/{args.model}/{args.dataset_name}_{args.fold_id}_{utils.datestr()}''
     return args
 
 

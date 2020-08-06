@@ -29,7 +29,7 @@ def save_arguments(args, path):
 
 def datestr():
     now = time.gmtime()
-    return '{:02}_{:02}___{:02}_{:02}'.format(now.tm_mday, now.tm_mon, now.tm_hour, now.tm_min)
+    return '{:02}-{:02}_{:02}-{:02}'.format(now.tm_mday, now.tm_mon, now.tm_hour, now.tm_min)
 
 
 def shuffle_lists(*ls, seed=777):
