@@ -2,7 +2,7 @@ import os
 import numpy as np
 from torch.utils.tensorboard import SummaryWriter
 
-import lib.utils as utils
+import medzoo.lib.utils as utils
 
 dict_class_names = {"iseg2017": ["Air", "CSF", "GM", "WM"],
                     "iseg2019": ["Air", "CSF", "GM", "WM"],
