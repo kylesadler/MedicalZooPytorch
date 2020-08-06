@@ -18,7 +18,6 @@ class MRIDatasetISEG2019(Dataset):
 
     def __init__(self, args, mode, dataset_path='./datasets', crop_dim=(32, 32, 32), split_id=1, samples=1000,
                  load=False):
-        print(type(load))
         """
         :param mode: 'train','val','test'
         :param dataset_path: root dataset folder
@@ -46,7 +45,6 @@ class MRIDatasetISEG2019(Dataset):
                             augment3D.ElasticTransform()], p=0.5)
         if load:
             ## load pre-generated data
-            print(load)
             self.list = utils.load_list(self.save_name)
             list_IDsT1 = sorted(glob.glob(os.path.join(self.training_path, '*T1.img')))
             self.affine = img_loader.load_affine_matrix(list_IDsT1[0])
