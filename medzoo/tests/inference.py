@@ -64,7 +64,7 @@ def get_arguments():
     parser.add_argument('--opt', type=str, default='sgd',
                         choices=('sgd', 'adam', 'rmsprop'))
     parser.add_argument('--pretrained',
-                        default='../saved_models/UNET3D_checkpoints/UNET3D_25_05___15_15_iseg2017_/UNET3D_25_05___15_15_iseg2017__last_epoch.pth',
+                        default='./saved_models/UNET3D_checkpoints/UNET3D_25_05___15_15_iseg2017_/UNET3D_25_05___15_15_iseg2017__last_epoch.pth',
                         type=str, metavar='PATH',
                         help='path to pretrained model')
 
@@ -72,7 +72,7 @@ def get_arguments():
 
     args.save = '../inference_checkpoints/' + args.model + '_checkpoints/' + args.model + '_{}_{}_'.format(
         utils.datestr(), args.dataset_name)
-    args.tb_log_dir = '../runs/'
+    args.tb_log_dir = './runs/'
     return args
 
 

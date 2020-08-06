@@ -28,11 +28,11 @@ def get_arguments():
     parser.add_argument('--opt', type=str, default='sgd',
                         choices=('sgd', 'adam', 'rmsprop'))
     parser.add_argument('--log_dir', type=str,
-                        default='../runs/')
+                        default='./runs/')
 
     args = parser.parse_args()
 
-    args.save = '../saved_models/' + args.model + '_checkpoints/' + args.model + '_{}_{}_'.format(
+    args.save = './saved_models/' + args.model + '_checkpoints/' + args.model + '_{}_{}_'.format(
         datestr(), args.dataset_name)
     return args
 

@@ -18,7 +18,7 @@ class MRIDatasetISEG2019(Dataset):
 
     def __init__(self, args, mode, dataset_path='./datasets', crop_dim=(32, 32, 32), split_id=1, samples=1000,
                  load=False):
-        load = False
+        # load = False
         """
         :param mode: 'train','val','test'
         :param dataset_path: root dataset folder
@@ -72,7 +72,8 @@ class MRIDatasetISEG2019(Dataset):
 
         elif self.mode == 'val':
             list_IDsT1 = list_IDsT1[split_id:]
-            list_IDsT2 = list_IDsT2[:split_id:]
+            # list_IDsT2 = list_IDsT2[:split_id:] #### this is probably a bug
+            list_IDsT2 = list_IDsT2[split_id:]
             labels = labels[split_id:]
             self.list = create_sub_volumes(list_IDsT1, list_IDsT2, labels, dataset_name="iseg2019",
                                            mode=mode, samples=samples, full_vol_dim=self.full_vol_dim,

@@ -39,7 +39,7 @@
 --model, type=str, default='UNET3D', choices=("RESNET3DVAE",'UNET3D',  'DENSENET1', 'DENSENET2', 'DENSENET3', 'HYPERDENSENET', "SKIPDENSENET3D",
                   "DENSEVOXELNET",'VNET','VNET2')
                   
---log_dir', type=str,     default='../runs/'
+--log_dir', type=str,     default='./runs/'
 
 --opt', type=str, default='sgd', choices=('sgd', 'adam', 'rmsprop')
 ```

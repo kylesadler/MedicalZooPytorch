@@ -21,7 +21,7 @@ def main():
     name_model = args.model + "_" + args.dataset_name + "_" + utils.datestr()
 
     # TODO visual3D_temp.Basewriter package
-    writer = SummaryWriter(log_dir='../runs/' + name_model, comment=name_model)
+    writer = SummaryWriter(log_dir='./runs/' + name_model, comment=name_model)
 
     training_generator, val_generator, full_volume, affine = medical_loaders.generate_datasets(args,
                                                                                                path='.././datasets')
@@ -67,7 +67,7 @@ def get_arguments():
 
     args = parser.parse_args()
 
-    args.save = '../saved_models/' + args.model + '_checkpoints/' + args.model + '_{}_{}_'.format(
+    args.save = './saved_models/' + args.model + '_checkpoints/' + args.model + '_{}_{}_'.format(
         utils.datestr(), args.dataset_name)
     return args
 
