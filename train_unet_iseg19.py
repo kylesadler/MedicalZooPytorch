@@ -2,7 +2,7 @@
 import argparse
 import os
 
-os.environ["CUDA_VISIBLE_DEVICES"] = "0,1,2,3"
+os.environ["CUDA_VISIBLE_DEVICES"] = "0,1,2"
 # medzoo.lib files
 import medzoo.lib.medloaders as medical_loaders
 import medzoo.lib.medzoo as medzoo
