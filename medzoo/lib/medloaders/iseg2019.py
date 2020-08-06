@@ -10,7 +10,6 @@ import medzoo.lib.utils as utils
 from medzoo.lib.medloaders import medical_image_process as img_loader
 from medzoo.lib.medloaders.medical_loader_utils import get_viz_set, create_sub_volumes
 
-
 class MRIDatasetISEG2019(Dataset):
     """
     Code for reading the infant brain MRI dataset of ISEG 2017 challenge
@@ -18,7 +17,8 @@ class MRIDatasetISEG2019(Dataset):
 
     def __init__(self, args, mode, dataset_path='./datasets', crop_dim=(32, 32, 32), split_id=1, samples=1000,
                  load=False):
-        split_id = int(split_id)
+        # split_id = int(split_id)
+        fold_id = int(args.fold_id)
         """
         :param mode: 'train','val','test'
         :param dataset_path: root dataset folder
@@ -62,19 +62,36 @@ class MRIDatasetISEG2019(Dataset):
         self.affine = img_loader.load_affine_matrix(list_IDsT1[0])
 
         if self.mode == 'train':
-            list_IDsT1 = list_IDsT1[:split_id]
-            list_IDsT2 = list_IDsT2[:split_id]
-            labels = labels[:split_id]
+            # custom code
+            # list_IDsT1 = list_IDsT1[:split_id]
+            # list_IDsT2 = list_IDsT2[:split_id]
+            # labels = labels[:split_id]
+
+            list_IDsT1 = [ x for x in list_IDsT1 if f'-{fold_id}-' not in x ]
+            list_IDsT2 = [ x for x in list_IDsT2 if f'-{fold_id}-' not in x ]
+            labels = [ x for x in labels if f'-{fold_id}-' not in x ]
+
+            assert(len(labels) == len(list_IDsT1))
+            assert(len(labels) == len(list_IDsT2))
+            assert(len(labels) == 9)
+
             self.list = create_sub_volumes(list_IDsT1, list_IDsT2, labels, dataset_name="iseg2019",
                                            mode=mode, samples=samples, full_vol_dim=self.full_vol_dim,
                                            crop_size=self.crop_size,
                                            sub_vol_path=self.sub_vol_path, th_percent=self.threshold)
 
         elif self.mode == 'val':
-            list_IDsT1 = list_IDsT1[split_id:]
-            # list_IDsT2 = list_IDsT2[:split_id:] #### this is probably a bug
-            list_IDsT2 = list_IDsT2[split_id:]
-            labels = labels[split_id:]
+            # list_IDsT1 = list_IDsT1[split_id:]
+            # list_IDsT2 = list_IDsT2[split_id:]
+            # labels = labels[split_id:]
+
+            list_IDsT1 = [ x for x in list_IDsT1 if f'-{fold_id}-' in x ]
+            list_IDsT2 = [ x for x in list_IDsT2 if f'-{fold_id}-' in x ]
+            labels = [ x for x in labels if f'-{fold_id}-' in x ]
+            assert(len(labels) == len(list_IDsT1))
+            assert(len(labels) == len(list_IDsT2))
+            assert(len(labels) == 1)
+
             self.list = create_sub_volumes(list_IDsT1, list_IDsT2, labels, dataset_name="iseg2019",
                                            mode=mode, samples=samples, full_vol_dim=self.full_vol_dim,
                                            crop_size=self.crop_size,
