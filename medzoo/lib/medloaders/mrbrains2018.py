@@ -13,6 +13,10 @@ from medzoo.lib.medloaders.medical_loader_utils import get_viz_set
 class MRIDatasetMRBRAINS2018(Dataset):
     def __init__(self, args, mode, dataset_path='../datasets', classes=4, dim=(32, 32, 32), split_id=0, samples=1000,
                  load=False):
+        
+        fold_id = int(args.fold_id) # one of 070  1  14  148  4  5  7
+        print(f'using fold_id {fold_id}')
+        
         self.mode = mode
         self.root = dataset_path
         self.classes = classes
@@ -51,16 +55,38 @@ class MRIDatasetMRBRAINS2018(Dataset):
 
         split_id = int(split_id)
         if mode == 'val':
-            labels = [labels[split_id]]
-            list_reg_t1 = [list_reg_t1[split_id]]
-            list_reg_ir = [list_reg_ir[split_id]]
-            list_flair = [list_flair[split_id]]
+            # labels = [labels[split_id]]
+            # list_reg_t1 = [list_reg_t1[split_id]]
+            # list_reg_ir = [list_reg_ir[split_id]]
+            # list_flair = [list_flair[split_id]]
+
+            labels = [ x for x in labels if f'/{fold_id}/' in x]
+            list_reg_t1 = [ x for x in list_reg_t1 if f'/{fold_id}/' in x]
+            list_reg_ir = [ x for x in list_reg_ir if f'/{fold_id}/' in x]
+            list_flair = [ x for x in list_flair if f'/{fold_id}/' in x]
+
+            assert len(labels) == len(list_reg_t1)
+            assert len(labels) == len(list_reg_ir)
+            assert len(labels) == len(list_flair)
+            assert len(labels) == 1
+
             self.full_volume = get_viz_set(list_reg_t1, list_reg_ir, list_flair, labels, dataset_name=dataset_name)
         else:
-            labels.pop(split_id)
-            list_reg_t1.pop(split_id)
-            list_reg_ir.pop(split_id)
-            list_flair.pop(split_id)
+            # labels.pop(split_id)
+            # list_reg_t1.pop(split_id)
+            # list_reg_ir.pop(split_id)
+            # list_flair.pop(split_id)
+
+
+            labels = [ x for x in labels if f'/{fold_id}/' not in x]
+            list_reg_t1 = [ x for x in list_reg_t1 if f'/{fold_id}/' not in x]
+            list_reg_ir = [ x for x in list_reg_ir if f'/{fold_id}/' not in x]
+            list_flair = [ x for x in list_flair if f'/{fold_id}/' not in x]
+
+            assert len(labels) == len(list_reg_t1)
+            assert len(labels) == len(list_reg_ir)
+            assert len(labels) == len(list_flair)
+            assert len(labels) == 6
 
         self.list = create_sub_volumes(list_reg_t1, list_reg_ir, list_flair, labels,
                                        dataset_name=dataset_name, mode=mode,
