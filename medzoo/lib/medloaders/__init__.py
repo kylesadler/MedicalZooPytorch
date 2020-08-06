@@ -1,3 +1,5 @@
+import path
+
 from torch.utils.data import DataLoader
 
 from .COVIDxdataset import COVIDxDataset
@@ -12,8 +14,9 @@ from .ixi_t1_t2 import IXIMRIdataset
 from .miccai_2019_pathology import MICCAI2019_gleason_pathology
 from .mrbrains2018 import MRIDatasetMRBRAINS2018
 
+dataset_dir = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'datasets')
 
-def generate_datasets(args, path='.././datasets'):
+def generate_datasets(args, path=dataset_dir):
     params = {'batch_size': args.batchSz,
               'shuffle': True,
               'num_workers': 2}
