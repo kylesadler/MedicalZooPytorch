@@ -15,6 +15,7 @@ seed = 1777777
 
 def main():
     args = get_arguments()
+    print(args)
 
     utils.reproducibility(args, seed)
     utils.make_dirs(args.save)
