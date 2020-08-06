@@ -14,7 +14,7 @@ class MRIDatasetMRBRAINS2018(Dataset):
     def __init__(self, args, mode, dataset_path='../datasets', classes=4, dim=(32, 32, 32), split_id=0, samples=1000,
                  load=False):
         
-        fold_id = int(args.fold_id) # one of 070  1  14  148  4  5  7
+        fold_id = args.fold_id # one of 070  1  14  148  4  5  7
         print(f'using fold_id {fold_id}')
         
         self.mode = mode
