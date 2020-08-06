@@ -3,7 +3,6 @@ import torch
 from torch.utils.data import Dataset
 from torchvision import transforms
 
-
 from lib.medloaders import medical_image_process as img_loader
 
 
