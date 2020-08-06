@@ -53,11 +53,11 @@ class TensorboardWriter():
         :param summary: to print total statistics at the end of epoch
         """
         if summary:
-            info_print = "{} {:2d}: \t Loss:{:.4f} \t DSC:{:.4f} ".format(mode, epoch,
-                                                                                         self.data[mode]['loss'] /
-                                                                                         self.data[mode]['count'],
-                                                                                         self.data[mode]['dsc'] /
-                                                                                         self.data[mode]['count'])
+            info_print = "{} {:2d}: \t Loss:{:.4f} \t DSC:{:.4f} ".format(
+                mode, epoch,
+                self.data[mode]['loss'] / self.data[mode]['count'],
+                self.data[mode]['dsc'] / self.data[mode]['count']
+                )
 
             for i in range(len(self.label_names)):
                 info_print += "\t{} : {:.4f}".format(self.label_names[i],
