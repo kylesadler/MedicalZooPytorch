@@ -39,7 +39,8 @@ class MRIDatasetISEG2017(Dataset):
         self.list = []
         self.samples = samples
         self.full_volume = None
-        self.save_name = self.root + '/iseg_2017/iSeg-2017-Training/iseg2017-list-' + mode + '-samples-' + str(
+        # self.save_name = self.root + '/iseg_2017/iSeg-2017-Training/iseg2017-list-' + mode + '-samples-' + str(
+        self.save_name = self.root + '/iseg2017-list-' + mode + '-samples-' + str(
             samples) + '.txt'
         if self.augmentation:
             self.transform = augment3D.RandomChoice(
