@@ -1,8 +1,8 @@
 import numpy as np
 import torch
 
-from lib.utils.general import prepare_input
-from lib.visual3D_temp.BaseWriter import TensorboardWriter
+from medzoo.lib.utils.general import prepare_input
+from medzoo.lib.visual3D_temp.BaseWriter import TensorboardWriter
 
 
 class Trainer:

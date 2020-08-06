@@ -5,10 +5,10 @@ import numpy as np
 import torch
 from torch.utils.data import Dataset
 
-import lib.augment3D as augment3D
-import lib.utils as utils
-from lib.medloaders import medical_image_process as img_loader
-from lib.medloaders.medical_loader_utils import create_sub_volumes
+import medzoo.lib.augment3D as augment3D
+import medzoo.lib.utils as utils
+from medzoo.lib.medloaders import medical_image_process as img_loader
+from medzoo.lib.medloaders.medical_loader_utils import create_sub_volumes
 
 
 class MICCAIBraTS2018(Dataset):

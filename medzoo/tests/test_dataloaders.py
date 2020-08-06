@@ -1,9 +1,9 @@
-# Python libraries
+# Python medzoo.libraries
 import argparse
 
-# Lib files
-import lib.utils as utils
-import lib.medloaders as medical_loaders
+# medzoo.lib files
+import medzoo.lib.utils as utils
+import medzoo.lib.medloaders as medical_loaders
 
 
 class TestDataLoaders:

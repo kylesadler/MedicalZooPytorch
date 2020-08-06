@@ -1,7 +1,7 @@
 import torch
 import torch.nn as nn
 from torchsummary import summary
-from lib.medzoo.BaseModelClass import BaseModel
+from medzoo.lib.medzoo.BaseModelClass import BaseModel
 
 """
 Implementation od DenseVoxelNet based on https://arxiv.org/abs/1708.00573

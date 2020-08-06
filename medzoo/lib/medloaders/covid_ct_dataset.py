@@ -1,7 +1,7 @@
 import os
 import torch
 from torch.utils.data import Dataset
-from lib.utils.covid_utils  import  read_txt
+from medzoo.lib.utils.covid_utils  import  read_txt
 from PIL import Image
 import torchvision.transforms as transforms
 

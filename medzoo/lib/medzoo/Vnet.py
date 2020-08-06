@@ -1,7 +1,7 @@
 import torch.nn as nn
 import torch
 from torchsummary import summary
-from lib.medzoo.BaseModelClass import BaseModel
+from medzoo.lib.medzoo.BaseModelClass import BaseModel
 
 """
 Implementation of this model is borrowed and modified

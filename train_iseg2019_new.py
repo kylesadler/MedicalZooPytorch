@@ -1,9 +1,9 @@
-# Python libraries
+# Python medzoo.libraries
 import argparse
 import os
 
 os.environ["CUDA_VISIBLE_DEVICES"] = "0"
-# Lib files
+# medzoo.lib files
 import medzoo.lib.medloaders as medical_loaders
 import medzoo.lib.medzoo as medzoo
 import medzoo.lib.train as train

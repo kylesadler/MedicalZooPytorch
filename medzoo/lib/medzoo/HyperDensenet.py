@@ -1,7 +1,7 @@
 import torch
 import torch.nn as nn
 from torchsummary import summary
-from lib.medzoo.BaseModelClass import BaseModel
+from medzoo.lib.medzoo.BaseModelClass import BaseModel
 
 """
 Code was borrowed and modified from this repo: https://github.com/josedolz/HyperDenseNet_pytorch 

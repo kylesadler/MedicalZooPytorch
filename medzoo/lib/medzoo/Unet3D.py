@@ -2,7 +2,7 @@ import torch.nn as nn
 import torch
 from torchsummary import summary
 import torchsummaryX
-from lib.medzoo.BaseModelClass import BaseModel
+from medzoo.lib.medzoo.BaseModelClass import BaseModel
 
 
 class UNet3D(BaseModel):

@@ -9,12 +9,12 @@ import torch, os
 
 from torch.utils.tensorboard import SummaryWriter
 
-# Lib files
-import lib.utils as utils
-import lib.medloaders as medical_loaders
-import lib.medzoo as medzoo
-import lib.train as train
-from lib.losses3D.Dice2D import DiceLoss2D
+# medzoo.lib files
+import medzoo.lib.utils as utils
+import medzoo.lib.medloaders as medical_loaders
+import medzoo.lib.medzoo as medzoo
+import medzoo.lib.train as train
+from medzoo.lib.losses3D.Dice2D import DiceLoss2D
 
 os.environ["CUDA_VISIBLE_DEVICES"] = "1"
 seed = 1777777

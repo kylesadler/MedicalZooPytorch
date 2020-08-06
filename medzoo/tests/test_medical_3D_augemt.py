@@ -1,16 +1,16 @@
-import urllib.request
+import urlmedzoo.lib.request
 import nibabel as nib
 import numpy as np
-import matplotlib.pyplot as plt
+import matplotmedzoo.lib.pyplot as plt
 
-from lib.augment3D import *
-from lib.visual3D_temp import show_mid_slice
+from medzoo.lib.augment3D import *
+from medzoo.lib.visual3D_temp import show_mid_slice
 
 url_1 = "https://nipy.org/nibabel/_downloads/c16214e490de2a223655d30f4ba78f15/someones_anatomy.nii.gz"
 url_2 = "https://nipy.org/nibabel/_downloads/f76cc5a46e5368e2c779868abc49e497/someones_epi.nii.gz"
 
-urllib.request.urlretrieve(url_1, './someones_epi.nii.gz')
-urllib.request.urlretrieve(url_2, './someones_anatomy.nii.gz')
+urlmedzoo.lib.request.urlretrieve(url_1, './someones_epi.nii.gz')
+urlmedzoo.lib.request.urlretrieve(url_2, './someones_anatomy.nii.gz')
 
 epi_img = nib.load('someones_epi.nii.gz')
 anatomy_img = nib.load('someones_anatomy.nii.gz')

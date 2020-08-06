@@ -1,4 +1,4 @@
-import matplotlib.pyplot as plt
+import matplotmedzoo.lib.pyplot as plt
 import os
 import numpy as np
 

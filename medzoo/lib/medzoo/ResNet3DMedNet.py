@@ -2,7 +2,7 @@ from functools import partial
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
-from lib.medzoo.BaseModelClass import BaseModel
+from medzoo.lib.medzoo.BaseModelClass import BaseModel
 
 """
 Original paper here: https://arxiv.org/abs/1904.00625

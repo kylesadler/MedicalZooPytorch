@@ -2,9 +2,9 @@ import torch
 import numpy as np
 import glob
 from torch.utils.data import Dataset
-import lib.utils as utils
+import medzoo.lib.utils as utils
 
-from lib.medloaders import medical_image_process as img_loader
+from medzoo.lib.medloaders import medical_image_process as img_loader
 
 """
 Based on this repository: https://github.com/black0017/MICCAI-2019-Prostate-Cancer-segmentation-challenge

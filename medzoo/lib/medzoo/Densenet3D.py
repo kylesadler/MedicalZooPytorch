@@ -2,7 +2,7 @@ import torch.nn as nn
 import torch
 import torch.nn.functional as F
 from torchsummary import summary
-from lib.medzoo.BaseModelClass import BaseModel
+from medzoo.lib.medzoo.BaseModelClass import BaseModel
 
 """
 Implementations based on the HyperDenseNet paper: https://arxiv.org/pdf/1804.02967.pdf

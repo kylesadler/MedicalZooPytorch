@@ -14,7 +14,7 @@
 #### Under development .....
 
 ## License and citation
-Advice the LICENSE.md file. For usage of third party libraries and repositories please advise the respective distributed terms. It would be nice to cite the original models and datasets. If you want, you can also cite this work as:
+Advice the LICENSE.md file. For usage of third party medzoo.libraries and repositories please advise the respective distributed terms. It would be nice to cite the original models and datasets. If you want, you can also cite this work as:
 
 ```
 @MastersThesis{adaloglou2019MRIsegmentation,

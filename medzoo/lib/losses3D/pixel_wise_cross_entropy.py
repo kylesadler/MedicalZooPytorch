@@ -1,4 +1,4 @@
-from lib.losses3D.basic import *
+from medzoo.lib.losses3D.basic import *
 import torch.nn as nn
 # Code was adapted and mofified from https://github.com/wolny/pytorch-3dunet/blob/master/pytorch3dunet/unet3d/losses.py
 

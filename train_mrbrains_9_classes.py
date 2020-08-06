@@ -1,15 +1,15 @@
-# Python libraries
+# Python medzoo.libraries
 import argparse
 import os
 
 import torch
 
-import lib.medloaders as medical_loaders
-import lib.medzoo as medzoo
-import lib.train as train
-# Lib files
-import lib.utils as utils
-from lib.losses3D.dice import DiceLoss
+import medzoo.lib.medloaders as medical_loaders
+import medzoo.lib.medzoo as medzoo
+import medzoo.lib.train as train
+# medzoo.lib files
+import medzoo.lib.utils as utils
+from medzoo.lib.losses3D.dice import DiceLoss
 
 os.environ["CUDA_VISIBLE_DEVICES"] = "1"
 seed = 1777777

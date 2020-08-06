@@ -4,7 +4,7 @@ import torch
 import torch.nn as nn
 from torchsummary import summary
 
-from lib.medzoo.BaseModelClass import BaseModel
+from medzoo.lib.medzoo.BaseModelClass import BaseModel
 
 """
 Based on the implementation of https://github.com/tbuikr/3D-SkipDenseSeg

@@ -2,7 +2,7 @@
 <img src="figures/med-zoo-logo.png" width=662 height=250/>
 </div>
 
-# A 3D multi-modal medical image segmentation library in PyTorch
+# A 3D multi-modal medical image segmentation medzoo.library in PyTorch
 [![Contributors][contributors-shield]][contributors-url]
 [![Forks][forks-shield]][forks-url]
 [![Stargazers][stars-shield]][stars-url]
@@ -10,7 +10,7 @@
 [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/black0017/MedicalZooPytorch/blob/master/Quickstart_MedicalZoo.ipynb)
 ![](https://img.shields.io/github/license/black0017/MedicalZooPytorch)
 
-We strongly believe in open and **reproducible deep learning research**. Our goal is to implement an open-source **medical image segmentation library of state of the art 3D deep neural networks in PyTorch**. We also implemented a bunch of data loaders of the most common medical image datasets.  This project started as an [MSc Thesis](https://nemertes.lis.upatras.gr/jspui/handle/10889/12754 "MSc thesis link") and is currently **under further development.** Although this work was initially focused on **3D multi-modal brain MRI segmentation** we are slowly adding more architectures and data-loaders.  
+We strongly believe in open and **reproducible deep learning research**. Our goal is to implement an open-source **medical image segmentation medzoo.library of state of the art 3D deep neural networks in PyTorch**. We also implemented a bunch of data loaders of the most common medical image datasets.  This project started as an [MSc Thesis](https://nemertes.lis.upatras.gr/jspui/handle/10889/12754 "MSc thesis link") and is currently **under further development.** Although this work was initially focused on **3D multi-modal brain MRI segmentation** we are slowly adding more architectures and data-loaders.  
 
 #### Top priorities 21-07
 [Update] 21-07 We have just received a brand new GPU. The project developedment was postponed due to lack of computational resources. We will be back with more updates. Please Watch our Github repository for releases to be notified. We are always looking for passionate open-source contributos. Full credits will be given.
@@ -162,7 +162,7 @@ If you find a bug, create a GitHub issue, or even better, submit a pull request.
 #### [Ilias Papastatis](https://github.com/iliasprc "Git page"), [Sergios Karagianakos](https://github.com/SergiosKar "Git page") and  [Nikolas Adaloglou](https://www.linkedin.com/in/adaloglou17/ "LinkedIn page")
 
 ## License , citation and acknowledgements
-Please advice the **LICENSE.md** file. For usage of third party libraries and repositories please advise the respective distributed terms. It would be nice to cite the **original models and datasets**. If you want, you can also **cite this work** as:
+Please advice the **LICENSE.md** file. For usage of third party medzoo.libraries and repositories please advise the respective distributed terms. It would be nice to cite the **original models and datasets**. If you want, you can also **cite this work** as:
 
 ```
 @MastersThesis{adaloglou2019MRIsegmentation,

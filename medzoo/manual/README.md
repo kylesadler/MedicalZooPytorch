@@ -125,7 +125,7 @@ Recent official results can be found [here](https://decathlon-10.grand-challenge
 - Random axis flip
 
 ## License and citation
-Advice the LICENSE.md file. For usage of third party libraries and repositories please advise the respective distributed terms. If you want, you can also cite this work as:
+Advice the LICENSE.md file. For usage of third party medzoo.libraries and repositories please advise the respective distributed terms. If you want, you can also cite this work as:
 
 ```
 @MastersThesis{adaloglou2019MRIsegmentation,

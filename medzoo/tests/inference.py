@@ -4,12 +4,12 @@ import os
 import torch
 import torch.nn.functional as F
 
-# Lib files
-import lib.utils as utils
-import lib.medloaders as medical_loaders
-import lib.medzoo as medzoo
-from lib.visual3D_temp import non_overlap_padding,test_padding
-from lib.losses3D import DiceLoss
+# medzoo.lib files
+import medzoo.lib.utils as utils
+import medzoo.lib.medloaders as medical_loaders
+import medzoo.lib.medzoo as medzoo
+from medzoo.lib.visual3D_temp import non_overlap_padding,test_padding
+from medzoo.lib.losses3D import DiceLoss
 #
 
 def main():

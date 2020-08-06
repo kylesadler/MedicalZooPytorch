@@ -4,9 +4,9 @@ from torch.utils.data import Dataset
 import glob
 import numpy as np
 
-import lib.utils as utils
-#from lib.medloaders import img_loader
-from lib.medloaders import medical_image_process as img_loader
+import medzoo.lib.utils as utils
+#from medzoo.lib.medloaders import img_loader
+from medzoo.lib.medloaders import medical_image_process as img_loader
 
 
 class IXIMRIdataset(Dataset):

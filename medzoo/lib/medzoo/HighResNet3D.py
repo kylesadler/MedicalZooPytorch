@@ -1,6 +1,6 @@
 import torch
 import torch.nn as nn
-from lib.medzoo.BaseModelClass import BaseModel
+from medzoo.lib.medzoo.BaseModelClass import BaseModel
 
 """
 Implementation based on the paper:

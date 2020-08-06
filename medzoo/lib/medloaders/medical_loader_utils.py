@@ -1,5 +1,5 @@
-from lib.medloaders import medical_image_process as img_loader
-from lib.visual3D_temp import *
+from medzoo.lib.medloaders import medical_image_process as img_loader
+from medzoo.lib.visual3D_temp import *
 
 
 def get_viz_set(*ls, dataset_name, test_subject=0, save=False, sub_vol_path=None):

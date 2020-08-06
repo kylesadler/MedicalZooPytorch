@@ -1,7 +1,7 @@
 import torch
 import torch.nn as nn
 
-from lib.utils.covid_utils import MetricTracker, accuracy
+from medzoo.lib.utils.covid_utils import MetricTracker, accuracy
 
 
 def train(args, model, trainloader, optimizer, epoch, writer):

@@ -1,7 +1,7 @@
 import torch
 from torch import nn as nn
 
-from lib.losses3D.basic import expand_as_one_hot
+from medzoo.lib.losses3D.basic import expand_as_one_hot
 
 
 # Code was adapted and mofified from https://github.com/wolny/pytorch-3dunet/blob/master/pytorch3dunet/unet3d/losses.py

@@ -1,6 +1,6 @@
-# Python libraries
+# Python medzoo.libraries
 import argparse
-import lib.medzoo as medzoo
+import medzoo.lib.medzoo as medzoo
 
 
 def main():

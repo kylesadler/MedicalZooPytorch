@@ -4,9 +4,9 @@ import os
 import numpy as np
 from torch.utils.data import Dataset
 
-import lib.utils as utils
-from lib.medloaders import medical_image_process as img_loader
-from lib.medloaders.medical_loader_utils import create_sub_volumes
+import medzoo.lib.utils as utils
+from medzoo.lib.medloaders import medical_image_process as img_loader
+from medzoo.lib.medloaders.medical_loader_utils import create_sub_volumes
 
 
 class COVID_Seg_Dataset(Dataset):

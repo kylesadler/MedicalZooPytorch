@@ -1,5 +1,5 @@
 import torch
-import lib.utils as utils
+import medzoo.lib.utils as utils
 
 """
 Unified train script that keep train/val statistics in Tensorboard

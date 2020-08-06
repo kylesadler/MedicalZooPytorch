@@ -1,5 +1,5 @@
-from lib.losses3D.BaseClass import _AbstractDiceLoss
-from lib.losses3D.basic import *
+from medzoo.lib.losses3D.BaseClass import _AbstractDiceLoss
+from medzoo.lib.losses3D.basic import *
 
 
 # Code was adapted and modified from https://github.com/wolny/pytorch-3dunet/blob/master/pytorch3dunet/unet3d/losses.py

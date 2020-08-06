@@ -1,12 +1,12 @@
 import argparse
 import os
 
-import lib.medloaders as medical_loaders
-import lib.medzoo as medzoo
-# Lib files
-import lib.utils as utils
-from lib.losses3D import DiceLoss, create_loss
-from lib.train.trainer import Trainer
+import medzoo.lib.medloaders as medical_loaders
+import medzoo.lib.medzoo as medzoo
+# medzoo.lib files
+import medzoo.lib.utils as utils
+from medzoo.lib.losses3D import DiceLoss, create_loss
+from medzoo.lib.train.trainer import Trainer
 
 import torch
 def main():

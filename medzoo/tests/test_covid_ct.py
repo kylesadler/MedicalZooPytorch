@@ -1,13 +1,13 @@
-# Python libraries
+# Python medzoo.libraries
 import argparse
 import os
 
 from torch.utils.tensorboard import SummaryWriter
 
-import lib.medloaders as medical_loaders
-import lib.medzoo as medzoo
-import lib.utils as utils
-from lib.train.train_covid import train, validation
+import medzoo.lib.medloaders as medical_loaders
+import medzoo.lib.medzoo as medzoo
+import medzoo.lib.utils as utils
+from medzoo.lib.train.train_covid import train, validation
 
 
 def main():

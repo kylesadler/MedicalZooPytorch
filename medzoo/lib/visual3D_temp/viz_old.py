@@ -1,5 +1,5 @@
 from .viz import *
-from lib.utils.general import prepare_input
+from medzoo.lib.utils.general import prepare_input
 
 
 def visualize_offline(args, epoch, model, full_volume, affine, writer):

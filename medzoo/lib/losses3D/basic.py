@@ -23,7 +23,7 @@ def expand_as_one_hot(input, C, ignore_index=None):
     if ignore_index is not None:
         # create ignore_index mask for the result
         mask = input.expand(shape) == ignore_index
-        # clone the lib tensor and zero out ignore_index in the input
+        # clone the medzoo.lib tensor and zero out ignore_index in the input
         input = input.clone()
         input[input == ignore_index] = 0
         # scatter to get the one-hot tensor
