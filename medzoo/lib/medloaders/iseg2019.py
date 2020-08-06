@@ -18,7 +18,6 @@ class MRIDatasetISEG2019(Dataset):
 
     def __init__(self, args, mode, dataset_path='./datasets', crop_dim=(32, 32, 32), split_id=1, samples=1000,
                  load=False):
-        load = True
         split_id = int(split_id)
         """
         :param mode: 'train','val','test'
