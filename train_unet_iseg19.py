@@ -2,7 +2,7 @@
 import argparse
 import os
 
-os.environ["CUDA_VISIBLE_DEVICES"] = "0,1,2"
+os.environ["CUDA_VISIBLE_DEVICES"] = "0"
 # medzoo.lib files
 import medzoo.lib.medloaders as medical_loaders
 import medzoo.lib.medzoo as medzoo
@@ -37,17 +37,21 @@ def main():
 
 def get_arguments():
     parser = argparse.ArgumentParser()
-    parser.add_argument('--batchSz', type=int, default=4)
+    parser.add_argument('--batchSz', type=int, default=64)
     parser.add_argument('--dataset_name', type=str, default="iseg2019")
     parser.add_argument('--dim', nargs="+", type=int, default=(32, 32, 32))
     parser.add_argument('--nEpochs', type=int, default=20000)
     parser.add_argument('--classes', type=int, default=4)
+
+    
     # parser.add_argument('--samples_train', type=int, default=4096)
     # parser.add_argument('--samples_val', type=int, default=512)
-    # parser.add_argument('--samples_train', type=int, default=1024)
-    # parser.add_argument('--samples_val', type=int, default=128)
-    parser.add_argument('--samples_train', type=int, default=1)
-    parser.add_argument('--samples_val', type=int, default=1)
+    parser.add_argument('--samples_train', type=int, default=1024)
+    parser.add_argument('--samples_val', type=int, default=128)
+    # parser.add_argument('--samples_train', type=int, default=1)
+    # parser.add_argument('--samples_val', type=int, default=1)
+
+
     parser.add_argument('--inChannels', type=int, default=2)
     parser.add_argument('--inModalities', type=int, default=2)
     parser.add_argument('--threshold', default=0.0001, type=float)
