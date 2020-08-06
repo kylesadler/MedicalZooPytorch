@@ -3,7 +3,7 @@ import torch
 from torch.utils.data import Dataset
 from torchvision import transforms
 
-import .medical_image_process as img_loader
+from lib.medloaders import medical_image_process as img_loader
 
 
 COVIDxDICT = {'pneumonia': 0, 'normal': 1, 'COVID-19': 2}

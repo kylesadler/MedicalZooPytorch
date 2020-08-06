@@ -1,5 +1,5 @@
 from torch.utils.data import DataLoader
-from .medical_image_process import *
+import medical_image_process 
 
 from .COVIDxdataset import COVIDxDataset
 from .Covid_Segmentation_dataset import COVID_Seg_Dataset
