@@ -20,6 +20,7 @@ def generate_datasets(args, path=dataset_dir):
     params = {'batch_size': args.batchSz,
               'shuffle': True,
               'num_workers': 2}
+    print(params)
     samples_train = args.samples_train
     samples_val = args.samples_val
     split_percent = args.split
