@@ -1,7 +1,7 @@
 import urlmedzoo.lib.request
 import nibabel as nib
 import numpy as np
-import matplotlib.lib.pyplot as plt
+import matplotlib.pyplot as plt
 
 from medzoo.lib.augment3D import *
 from medzoo.lib.visual3D_temp import show_mid_slice

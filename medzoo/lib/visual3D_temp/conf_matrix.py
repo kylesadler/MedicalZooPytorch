@@ -1,5 +1,5 @@
 import itertools
-import matplotlib.lib.pyplot as plt
+import matplotlib.pyplot as plt
 import numpy as np
 import torch
 
