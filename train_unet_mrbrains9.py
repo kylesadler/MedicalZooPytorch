@@ -41,7 +41,7 @@ def get_arguments():
     parser.add_argument('--batchSz', type=int, default=8)
     parser.add_argument('--dataset_name', type=str, default="mrbrains9")
     # max size is (240, 240, 48)
-    parser.add_argument('--dim', nargs="+", type=int, default=(32, 32, 32))
+    parser.add_argument('--dim', nargs="+", type=int, default=(48, 48, 48))
     parser.add_argument('--nEpochs', type=int, default=20000)
     parser.add_argument('--classes', type=int, default=9)
 
