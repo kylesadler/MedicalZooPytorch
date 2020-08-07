@@ -11,7 +11,7 @@ import medzoo.lib.train as train
 import medzoo.lib.utils as utils
 from medzoo.lib.losses3D.dice import DiceLoss
 
-os.environ["CUDA_VISIBLE_DEVICES"] = "2"
+os.environ["CUDA_VISIBLE_DEVICES"] = "1"
 seed = 1777777
 torch.manual_seed(seed)
 
