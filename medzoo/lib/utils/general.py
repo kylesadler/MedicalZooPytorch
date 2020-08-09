@@ -74,7 +74,6 @@ def prepare_input(input_tuple, inModalities=-1, inChannels=-1, cuda=False, args=
                 img_2 = torch.reshape(img_2, (8, 1, 48, 48, 48))
                 img_3 = torch.reshape(img_3, (8, 1, 48, 48, 48))
                 input_tensor = torch.cat((img_1, img_2, img_3), dim=1)
-                print('converting')
 
             else:
                 input_tensor = torch.cat((img_1, img_2, img_3), dim=1)

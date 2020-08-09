@@ -42,10 +42,8 @@ class MRIDatasetMRBRAINS2018(Dataset):
         list_reg_ir = sorted(glob.glob(os.path.join(self.training_path, '*/pr*/*g_IR.nii.gz')))
         list_flair = sorted(glob.glob(os.path.join(self.training_path, '*/pr*/*AIR.nii.gz')))
         labels = sorted(glob.glob(os.path.join(self.training_path, '*/*egm.nii.gz')))
-        
-        print('here')
+
         self.affine = img_loader.load_affine_matrix(list_reg_t1[0])
-        print('done')
 
         if load:
             ## load pre-generated data
