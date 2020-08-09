@@ -53,10 +53,10 @@ def get_arguments():
     # parser.add_argument('--samples_train', type=int, default=1)
     # parser.add_argument('--samples_val', type=int, default=1)
 
-    parser.add_argument('--inChannels', type=int, default=3)
-    parser.add_argument('--inModalities', type=int, default=3)
-    # parser.add_argument('--inChannels', type=int, default=2)
-    # parser.add_argument('--inModalities', type=int, default=2)
+    # parser.add_argument('--inChannels', type=int, default=3)
+    # parser.add_argument('--inModalities', type=int, default=3)
+    parser.add_argument('--inChannels', type=int, default=2)
+    parser.add_argument('--inModalities', type=int, default=2)
     parser.add_argument('--threshold', default=0.1, type=float)
     parser.add_argument('--augmentation', default='no', type=str,
                         help='Tensor normalization: options max, mean, global')
