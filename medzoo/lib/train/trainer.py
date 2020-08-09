@@ -57,7 +57,6 @@ class Trainer:
 
             self.optimizer.zero_grad()
 
-            print(np.shape(input_tuple))
             input_tensor, target = prepare_input(input_tuple=input_tuple, args=self.args)
             print(input_tensor.size())
             input_tensor.requires_grad = True
