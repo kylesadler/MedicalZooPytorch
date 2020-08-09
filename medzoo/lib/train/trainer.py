@@ -27,7 +27,8 @@ class Trainer:
         self.writer = TensorboardWriter(args)
 
         self.save_frequency = 10
-        self.terminal_show_freq = self.args.terminal_show_freq or 100000
+        # self.terminal_show_freq = self.args.terminal_show_freq
+        self.terminal_show_freq = 100000
         self.start_epoch = 1
 
     def training(self):
