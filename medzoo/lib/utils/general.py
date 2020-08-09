@@ -70,9 +70,9 @@ def prepare_input(input_tuple, inModalities=-1, inChannels=-1, cuda=False, args=
             # they get concatenated into 8 x 144 x 48 x 48
             # but model wants 8 x 3 x 48 x 48 x 48
             if args.dataset_name == 'mrbrains9':
-                img_1 = np.asarray(img_1).reshape((8, 1, 48, 48, 48))
-                img_2 = np.asarray(img_1).reshape((8, 1, 48, 48, 48))
-                img_3 = np.asarray(img_1).reshape((8, 1, 48, 48, 48))
+                img_1 = torch.reshape(img_1, (8, 1, 48, 48, 48))
+                img_2 = torch.reshape(img_2, (8, 1, 48, 48, 48))
+                img_3 = torch.reshape(img_3, (8, 1, 48, 48, 48))
                 input_tensor = torch.cat((img_1, img_2, img_3), dim=1)
                 print('converting')
 
