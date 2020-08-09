@@ -66,6 +66,10 @@ def prepare_input(input_tuple, inModalities=-1, inChannels=-1, cuda=False, args=
     if modalities == 3:
         if channels == 3:
             img_1, img_2, img_3, target = input_tuple
+            print(img_1.shape())
+            print(img_2.shape())
+            print(img_3.shape())
+            print(target.shape())
             input_tensor = torch.cat((img_1, img_2, img_3), dim=1)
         elif channels == 2:
             img_1, img_2, _, target = input_tuple
