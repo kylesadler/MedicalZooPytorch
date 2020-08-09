@@ -55,6 +55,8 @@ def get_arguments():
 
     parser.add_argument('--inChannels', type=int, default=3)
     parser.add_argument('--inModalities', type=int, default=3)
+    # parser.add_argument('--inChannels', type=int, default=2)
+    # parser.add_argument('--inModalities', type=int, default=2)
     parser.add_argument('--threshold', default=0.1, type=float)
     parser.add_argument('--augmentation', default='no', type=str,
                         help='Tensor normalization: options max, mean, global')
@@ -71,7 +73,7 @@ def get_arguments():
     parser.add_argument('--fold_id', default='1', type=str, help='Select subject for fold validation')
 
     parser.add_argument('--cuda', action='store_true', default=True)
-    
+
     # parser.add_argument('--loadData', default=True)
     parser.add_argument('--loadData', default=True)
 
