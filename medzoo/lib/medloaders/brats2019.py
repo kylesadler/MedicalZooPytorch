@@ -136,6 +136,13 @@ class MICCAIBraTS2019(Dataset):
         f_t1, f_t1ce, f_t2, f_flair, f_seg = self.list[index]
         img_t1, img_t1ce, img_t2, img_flair, img_seg = np.load(f_t1), np.load(f_t1ce), np.load(f_t2), np.load(
             f_flair), np.load(f_seg)
+
+        # 0         , 1             , 2         , 3
+        # background, enhancing tumor, tumor core, whole tumor
+        img_seg = (img_seg == 4).astype(int) \
+        + (img_seg == 1 or img_seg == 4).astype(int) \
+        + (img_seg > 0).astype(int)
+
         if self.mode == 'train' and self.augmentation:
             [img_t1, img_t1ce, img_t2, img_flair], img_seg = self.transform([img_t1, img_t1ce, img_t2, img_flair],
                                                                             img_seg)

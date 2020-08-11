@@ -24,7 +24,7 @@ def main():
 
     training_generator, val_generator, full_volume, affine = medical_loaders.generate_datasets(args)
     model, optimizer = medzoo.create_model(args)
-    criterion = DiceLoss(classes=11, skip_index_after=args.classes)
+    criterion = DiceLoss(classes=3, skip_index_after=args.classes)
 
     if args.cuda:
         model = model.cuda()
@@ -75,8 +75,8 @@ def get_arguments():
 
     parser.add_argument('--cuda', action='store_true', default=True)
 
-    # parser.add_argument('--loadData', default=True)
-    parser.add_argument('--loadData', default=False)
+    parser.add_argument('--loadData', default=True)
+    # parser.add_argument('--loadData', default=False)
 
     parser.add_argument('--model', type=str, default='UNET3D',
                         choices=('VNET', 'VNET2', 'UNET3D', 'DENSENET1', 'DENSENET2', 'DENSENET3', 'HYPERDENSENET'))
