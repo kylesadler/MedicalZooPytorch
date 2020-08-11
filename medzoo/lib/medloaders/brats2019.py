@@ -56,35 +56,63 @@ class MICCAIBraTS2019(Dataset):
         self.sub_vol_path = self.root + '/brats2019/MICCAI_BraTS_2019_Data_Training/generated/' + mode + subvol + '/'
         utils.make_dirs(self.sub_vol_path)
 
-        list_IDsT1 = sorted(glob.glob(os.path.join(self.training_path, '*GG/*/*t1.nii.gz')))
-        list_IDsT1ce = sorted(glob.glob(os.path.join(self.training_path, '*GG/*/*t1ce.nii.gz')))
-        list_IDsT2 = sorted(glob.glob(os.path.join(self.training_path, '*GG/*/*t2.nii.gz')))
-        list_IDsFlair = sorted(glob.glob(os.path.join(self.training_path, '*GG/*/*_flair.nii.gz')))
-        labels = sorted(glob.glob(os.path.join(self.training_path, '*GG/*/*_seg.nii.gz')))
-        list_IDsT1, list_IDsT1ce, list_IDsT2, list_IDsFlair, labels = utils.shuffle_lists(list_IDsT1, list_IDsT1ce,
-                                                                                          list_IDsT2,
-                                                                                          list_IDsFlair, labels,
-                                                                                          seed=17)
+
+
+        # split HGG and LGG
+        HGG_IDsT1 = sorted(glob.glob(os.path.join(self.training_path, 'HGG/*/*t1.nii.gz')))
+        HGG_IDsT1ce = sorted(glob.glob(os.path.join(self.training_path, 'HGG/*/*t1ce.nii.gz')))
+        HGG_IDsT2 = sorted(glob.glob(os.path.join(self.training_path, 'HGG/*/*t2.nii.gz')))
+        HGG_IDsFlair = sorted(glob.glob(os.path.join(self.training_path, 'HGG/*/*_flair.nii.gz')))
+        HGG_labels = sorted(glob.glob(os.path.join(self.training_path, 'HGG/*/*_seg.nii.gz')))
+
+        LGG_IDsT1 = sorted(glob.glob(os.path.join(self.training_path, 'LGG/*/*t1.nii.gz')))
+        LGG_IDsT1ce = sorted(glob.glob(os.path.join(self.training_path, 'LGG/*/*t1ce.nii.gz')))
+        LGG_IDsT2 = sorted(glob.glob(os.path.join(self.training_path, 'LGG/*/*t2.nii.gz')))
+        LGG_IDsFlair = sorted(glob.glob(os.path.join(self.training_path, 'LGG/*/*_flair.nii.gz')))
+        LGG_labels = sorted(glob.glob(os.path.join(self.training_path, 'LGG/*/*_seg.nii.gz')))
+
+        HGG_IDsT1, HGG_IDsT1ce, HGG_IDsT2, HGG_IDsFlair, HGG_labels = utils.shuffle_lists(HGG_IDsT1, 
+                                                                                            HGG_IDsT1ce,
+                                                                                            HGG_IDsT2,
+                                                                                            HGG_IDsFlair,
+                                                                                            HGG_labels,
+                                                                                            seed=17
+                                                                                        )
+
+        LGG_IDsT1, LGG_IDsT1ce, LGG_IDsT2, LGG_IDsFlair, LGG_labels = utils.shuffle_lists(LGG_IDsT1, 
+                                                                                            LGG_IDsT1ce,
+                                                                                            LGG_IDsT2,
+                                                                                            LGG_IDsFlair,
+                                                                                            LGG_labels,
+                                                                                            seed=17
+                                                                                        )
+
         self.affine = img_loader.load_affine_matrix(list_IDsT1[0])
 
+        hgg_len = len(HGG_IDsT1)
+        lgg_len = len(LGG_IDsT1)
+        print('Brats2019, Training data:', hgg_len + lgg_len)
+
+        hgg_split = int(hgg_len * .8)
+        lgg_split = int(lgg_len * .8)
+
         if self.mode == 'train':
-            print('Brats2019, Total data:', len(list_IDsT1))
-            list_IDsT1 = list_IDsT1[:split_idx]
-            list_IDsT1ce = list_IDsT1ce[:split_idx]
-            list_IDsT2 = list_IDsT2[:split_idx]
-            list_IDsFlair = list_IDsFlair[:split_idx]
-            labels = labels[:split_idx]
+            list_IDsT1 = HGG_IDsT1[:hgg_split] + LGG_IDsT1[:hgg_split]
+            list_IDsT1ce = HGG_IDsT1ce[:hgg_split] + LGG_IDsT1ce[:hgg_split]
+            list_IDsT2 = HGG_IDsT2[:hgg_split] + LGG_IDsT2[:hgg_split]
+            list_IDsFlair = HGG_IDsFlair[:hgg_split] + LGG_IDsFlair[:hgg_split]
+            labels = HGG_labels[:hgg_split] + LGG_labels[:hgg_split]
             self.list = create_sub_volumes(list_IDsT1, list_IDsT1ce, list_IDsT2, list_IDsFlair, labels,
                                            dataset_name="brats2019", mode=mode, samples=samples,
                                            full_vol_dim=self.full_vol_dim, crop_size=self.crop_size,
                                            sub_vol_path=self.sub_vol_path, th_percent=self.threshold)
 
         elif self.mode == 'val':
-            list_IDsT1 = list_IDsT1[split_idx:]
-            list_IDsT1ce = list_IDsT1ce[split_idx:]
-            list_IDsT2 = list_IDsT2[split_idx:]
-            list_IDsFlair = list_IDsFlair[split_idx:]
-            labels = labels[split_idx:]
+            list_IDsT1 = HGG_IDsT1[hgg_split:] + LGG_IDsT1[hgg_split:]
+            list_IDsT1ce = HGG_IDsT1ce[hgg_split:] + LGG_IDsT1ce[hgg_split:]
+            list_IDsT2 = HGG_IDsT2[hgg_split:] + LGG_IDsT2[hgg_split:]
+            list_IDsFlair = HGG_IDsFlair[hgg_split:] + LGG_IDsFlair[hgg_split:]
+            labels = HGG_labels[hgg_split:] + LGG_labels[hgg_split:]
             self.list = create_sub_volumes(list_IDsT1, list_IDsT1ce, list_IDsT2, list_IDsFlair, labels,
                                            dataset_name="brats2019", mode=mode, samples=samples,
                                            full_vol_dim=self.full_vol_dim, crop_size=self.crop_size,
