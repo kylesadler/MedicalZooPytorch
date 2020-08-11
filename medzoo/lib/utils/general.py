@@ -54,7 +54,7 @@ def prepare_input(input_tuple, inModalities=-1, inChannels=-1, cuda=False, args=
             # size of each is 8 x 64 x 64 x 64
             # they get concatenated into 8 x 256 x 64 x 64
             # but model wants 8 x 3 x 64 x 64 x 64
-            if args.dataset_name == 'mrbrains9':
+            if args.dataset_name == 'brats2019':
                 img_1 = torch.reshape(img_1, (8, 1, 64, 64, 64))
                 img_2 = torch.reshape(img_2, (8, 1, 64, 64, 64))
                 img_3 = torch.reshape(img_3, (8, 1, 64, 64, 64))
