@@ -91,7 +91,9 @@ class MICCAIBraTS2019(Dataset):
 
         hgg_len = len(HGG_IDsT1)
         lgg_len = len(LGG_IDsT1)
-        print('Brats2019, Training data:', hgg_len + lgg_len)
+        print('Brats2019, Training HGG:', hgg_len)
+        print('Brats2019, Training LGG:', lgg_len)
+        print('Brats2019, Training total:', hgg_len + lgg_len)
 
         hgg_split = int(hgg_len * .8)
         lgg_split = int(lgg_len * .8)
