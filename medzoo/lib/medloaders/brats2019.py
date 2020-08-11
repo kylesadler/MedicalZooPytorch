@@ -87,7 +87,7 @@ class MICCAIBraTS2019(Dataset):
                                                                                             seed=17
                                                                                         )
 
-        self.affine = img_loader.load_affine_matrix(list_IDsT1[0])
+        self.affine = img_loader.load_affine_matrix((HGG_IDsT1+LGG_IDsT1)[0])
 
         hgg_len = len(HGG_IDsT1)
         lgg_len = len(LGG_IDsT1)
