@@ -56,6 +56,8 @@ def main():
 
     model.eval()
 
+    confusion_matrix = [ [0]*4 for i in range(4) ]
+
     for batch_idx, input_tuple in enumerate(test_loader):
         with torch.no_grad():
             img_t1, img_t2, target = input_tuple
@@ -77,14 +79,14 @@ def main():
             print(target.size())
             print(output.size())
 
+            output = torch.reshape(output, (-1,))
+            target = torch.reshape(target, (-1,))
+            
+            print(target.size())
+            print(output.size())
 
-            loss, per_ch_score = criterion(output, target)
-
-            print(loss.item(), per_ch_score)
-
-    # val_loss = trainer.writer.data['val']['loss'] / trainer.writer.data['val']['count']
-
-    # print(val_loss)
+            for gt, pred in zip(target, output):
+                confusion_matrix[gt][pred] += 1
 
 
 
