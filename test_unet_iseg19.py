@@ -26,7 +26,19 @@ def main():
     val_loader = MRIDatasetISEG2019(args, 'val', dataset_path=path, crop_dim=args.dim, split_id=split_idx,
                                         samples=samples_val, load=args.loadData)
 
-    model, optimizer = medzoo.create_model(args)
+
+
+
+    model_name = args.model
+    lr = args.lr
+    in_channels = args.inChannels
+    num_classes = args.classes
+    weight_decay = 0.0000000001
+    print("Building Model . . . . . . . ." + model_name)
+    model = UNet3D(in_channels=in_channels, n_classes=num_classes, base_n_filter=8)
+    print(model_name, 'Number of params: {}'.format(sum([p.data.nelement() for p in model.parameters()])))
+
+    model.restore_checkpoint("/home/kyle/results/UNET3D/iseg2019_9_06-08_21-25/iseg2019_9_06-08_21-25_BEST.pth")
     criterion = DiceLoss(classes=args.classes)
 
     if args.cuda:
