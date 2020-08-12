@@ -94,6 +94,8 @@ def prepare_input(input_tuple, inModalities=-1, inChannels=-1, cuda=False, args=
         if channels == 2:
             img_t1, img_t2, target = input_tuple
             if args.dataset_name == 'iseg2019':
+                print(img_t1.size())
+                print(img_t2.size())
                 img_t1 = torch.reshape(img_t1, (8, 1, 64, 64, 64))
                 img_t2 = torch.reshape(img_t2, (8, 1, 64, 64, 64))
 
