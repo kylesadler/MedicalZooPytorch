@@ -23,7 +23,7 @@ class Trainer:
         self.valid_data_loader = valid_data_loader
         self.do_validation = self.valid_data_loader is not None
         self.lr_scheduler = lr_scheduler
-        self.log_step = int(np.sqrt(train_data_loader.batch_size))
+        # self.log_step = int(np.sqrt(train_data_loader.batch_size))
         self.writer = TensorboardWriter(args)
 
         self.save_frequency = 10
