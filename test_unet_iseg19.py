@@ -85,7 +85,7 @@ def main():
             for gt, pred in zip(target, output):
                 print(gt)
                 print(pred)
-                confusion_matrix[gt][pred] += 1
+                confusion_matrix[int(gt)][int(pred)] += 1
 
 
 
