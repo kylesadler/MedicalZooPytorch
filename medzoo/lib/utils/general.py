@@ -96,10 +96,10 @@ def prepare_input(input_tuple, inModalities=-1, inChannels=-1, cuda=False, args=
             if args.dataset_name == 'iseg2019':
                 print(img_t1.size())
                 print(img_t2.size())
-                img_t1 = torch.reshape(img_t1, (-1, 1, 64, 64, 64))
-                img_t2 = torch.reshape(img_t2, (-1, 1, 64, 64, 64))
-                print(img_t1.size())
-                print(img_t2.size())
+                # img_t1 = torch.reshape(img_t1, (-1, 1, 64, 64, 64))
+                # img_t2 = torch.reshape(img_t2, (-1, 1, 64, 64, 64))
+                # print(img_t1.size())
+                # print(img_t2.size())
 
             input_tensor = torch.cat((img_t1, img_t2), dim=1)
 

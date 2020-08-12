@@ -42,6 +42,7 @@ class _AbstractDiceLoss(nn.Module):
         """
         Expand to one hot added extra for consistency reasons
         """
+        print(target.size())
         target = expand_as_one_hot(target.long(), self.classes)
 
         assert input.dim() == target.dim() == 5, "'input' and 'target' have different number of dims"
