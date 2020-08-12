@@ -67,7 +67,7 @@ def main():
             img_t2 = torch.reshape(img_t2, (-1, 1, 64, 64, 64))
 
             input_tensor = torch.cat((img_t1, img_t2), dim=1)
-            print(input_tensor.size())
+            # print(input_tensor.size())
 
             input_tensor.requires_grad = False
 
@@ -76,13 +76,12 @@ def main():
             output = torch.argmax(output, dim=1)
             output = torch.reshape(output, (-1, 1, 64, 64, 64))
 
-            print(target.size())
-            print(output.size())
+            assert target.size() == output.size()
 
             output = torch.reshape(output, (-1,)).tolist()
             target = torch.reshape(target, (-1,)).tolist()
 
-            print(len(output), len(target))
+            assert len(output) == len(target)
 
             for gt, pred in zip(target, output):
                 confusion_matrix[int(gt)][int(pred)] += 1
