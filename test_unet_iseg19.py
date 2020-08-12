@@ -49,9 +49,8 @@ def main():
     model.restore_checkpoint("/home/kyle/results/UNET3D/iseg2019_9_06-08_21-25/iseg2019_9_06-08_21-25_BEST.pth")
     criterion = DiceLoss(classes=args.classes)
 
-    if args.cuda:
-        model = model.cuda()
-        print("Model transferred in GPU.....")
+    # model = model.cuda()
+    # print("Model transferred in GPU.....")
 
     print("TESTING...")
 
@@ -61,20 +60,18 @@ def main():
         with torch.no_grad():
             img_t1, img_t2, target = input_tuple
             
-            print(img_t1.size())
-            print(img_t2.size())
             img_t1 = torch.reshape(img_t1, (-1, 1, 64, 64, 64))
             img_t2 = torch.reshape(img_t2, (-1, 1, 64, 64, 64))
-            print(img_t1.size())
-            print(img_t2.size())
 
             input_tensor = torch.cat((img_t1, img_t2), dim=1)
             print(input_tensor.size())
-            print(target.size())
 
             input_tensor.requires_grad = False
 
             output = model(input_tensor)
+            print(target.size())
+            print(output.size())
+
             loss, per_ch_score = criterion(output, target)
 
             print(loss.item(), per_ch_score)
@@ -115,7 +112,7 @@ def get_arguments():
                         help='learning rate (default: 1e-3)')
     parser.add_argument('--split', default=0.8, type=float, help='Select percentage of training data(default: 0.8)')
     parser.add_argument('--cuda', action='store_true', default=True)
-    parser.add_argument('--loadData', default=True)
+    parser.add_argument('--loadData', default=False)
     parser.add_argument('--resume', default='', type=str, metavar='PATH',
                         help='path to latest checkpoint (default: none)')
     parser.add_argument('--model', type=str, default='UNET3D',
