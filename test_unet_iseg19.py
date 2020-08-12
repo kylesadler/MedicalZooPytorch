@@ -27,10 +27,10 @@ def main():
     print(params)
     samples_train = args.samples_train
     samples_val = args.samples_val
-    test_loader = MRIDatasetISEG2019(args, 'test', dataset_path=dataset_dir, crop_dim=args.dim, split_id=split_idx,
+    test_loader = MRIDatasetISEG2019(args, 'test', dataset_path=dataset_dir, crop_dim=args.dim, split_id=0,
                                         samples=samples_train, load=args.loadData)
     
-    val_loader = MRIDatasetISEG2019(args, 'val', dataset_path=dataset_dir, crop_dim=args.dim, split_id=split_idx,
+    val_loader = MRIDatasetISEG2019(args, 'val', dataset_path=dataset_dir, crop_dim=args.dim, split_id=0,
                                         samples=samples_val, load=args.loadData)
 
 
