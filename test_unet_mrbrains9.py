@@ -52,7 +52,7 @@ def main():
 
     model.eval()
 
-    confusion_matrix = [ [0]*num_classes for i in range(num_classes) ]
+    confusion_matrix = [ [0]*(num_classes*2) for i in range(num_classes*2) ]
 
     for batch_idx, input_tuple in enumerate(test_loader):
         with torch.no_grad():
