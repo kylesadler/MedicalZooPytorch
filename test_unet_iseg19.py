@@ -81,11 +81,10 @@ def main():
 
             output = torch.reshape(output, (-1,))
             target = torch.reshape(target, (-1,))
-            
-            print(target.size())
-            print(output.size())
 
             for gt, pred in zip(target, output):
+                print(gt)
+                print(pred)
                 confusion_matrix[gt][pred] += 1
 
 
