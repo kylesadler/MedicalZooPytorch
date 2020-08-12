@@ -75,7 +75,7 @@ class MRIDatasetMRBRAINS2018(Dataset):
             assert len(labels) == 1
 
             self.full_volume = get_viz_set(list_reg_t1, list_reg_ir, list_flair, labels, dataset_name=dataset_name)
-        else:
+        elif mode == 'train':
             # labels.pop(split_id)
             # list_reg_t1.pop(split_id)
             # list_reg_ir.pop(split_id)
@@ -91,6 +91,16 @@ class MRIDatasetMRBRAINS2018(Dataset):
             assert len(labels) == len(list_reg_ir)
             assert len(labels) == len(list_flair)
             assert len(labels) == 6
+        else:
+            labels = [ x for x in labels if f'/{fold_id}/' in x]
+            list_reg_t1 = [ x for x in list_reg_t1 if f'/{fold_id}/' in x]
+            list_reg_ir = [ x for x in list_reg_ir if f'/{fold_id}/' in x]
+            list_flair = [ x for x in list_flair if f'/{fold_id}/' in x]
+
+            assert len(labels) == len(list_reg_t1)
+            assert len(labels) == len(list_reg_ir)
+            assert len(labels) == len(list_flair)
+            assert len(labels) == 1
 
         self.list = create_sub_volumes(list_reg_t1, list_reg_ir, list_flair, labels,
                                        dataset_name=dataset_name, mode=mode,

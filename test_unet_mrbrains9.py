@@ -5,7 +5,7 @@ import torch
 
 os.environ["CUDA_VISIBLE_DEVICES"] = "0"
 # medzoo.lib files
-from medzoo.lib.medloaders import MRIDatasetISEG2019, dataset_dir
+from medzoo.lib.medloaders import MRIDatasetMRBRAINS2018, dataset_dir
 from medzoo.lib.medzoo import UNet3D
 import medzoo.lib.train as train
 import medzoo.lib.utils as utilss
@@ -28,14 +28,11 @@ def main():
     params = {'batch_size': args.batchSz,
               'shuffle': True,
               'num_workers': 2}
-    print(params)
     samples_train = args.samples_train
     samples_val = args.samples_val
-    test_loader = MRIDatasetISEG2019(args, 'test', dataset_path=dataset_dir, crop_dim=args.dim, split_id=0,
+    test_loader = MRIDatasetMRBRAINS2018(args, 'test', dataset_path=dataset_dir, crop_dim=args.dim, split_id=0,
                                         samples=samples_train, load=args.loadData)
     
-
-
 
     model_name = args.model
     lr = args.lr
@@ -46,8 +43,7 @@ def main():
     model = UNet3D(in_channels=in_channels, n_classes=num_classes, base_n_filter=8)
     print(model_name, 'Number of params: {}'.format(sum([p.data.nelement() for p in model.parameters()])))
 
-    model.restore_checkpoint("/home/kyle/results/UNET3D/iseg2019_9_06-08_21-25/iseg2019_9_06-08_21-25_BEST.pth")
-    criterion = DiceLoss(classes=args.classes)
+    model.restore_checkpoint("/home/kyle/results/UNET3D/mrbrains9_148_09-08_17-46/mrbrains9_148_09-08_17-46_BEST.pth")
 
     # model = model.cuda()
     # print("Model transferred in GPU.....")
@@ -56,18 +52,18 @@ def main():
 
     model.eval()
 
-    confusion_matrix = [ [0]*4 for i in range(4) ]
+    confusion_matrix = [ [0]*num_classes for i in range(num_classes) ]
 
     for batch_idx, input_tuple in enumerate(test_loader):
         with torch.no_grad():
-            img_t1, img_t2, target = input_tuple
+            img_t1, img_t2, img_t3, target = input_tuple
             
             target = torch.reshape(target, (-1, 1, 48, 48, 48))
             img_t1 = torch.reshape(img_t1, (-1, 1, 48, 48, 48))
             img_t2 = torch.reshape(img_t2, (-1, 1, 48, 48, 48))
+            img_t3 = torch.reshape(img_t3, (-1, 1, 48, 48, 48))
 
-            input_tensor = torch.cat((img_t1, img_t2), dim=1)
-            print(input_tensor.size())
+            input_tensor = torch.cat((img_t1, img_t2, img_t3), dim=1)
 
             input_tensor.requires_grad = False
 
@@ -76,13 +72,12 @@ def main():
             output = torch.argmax(output, dim=1)
             output = torch.reshape(output, (-1, 1, 48, 48, 48))
 
-            print(target.size())
-            print(output.size())
+            assert target.size() == output.size()
 
             output = torch.reshape(output, (-1,)).tolist()
             target = torch.reshape(target, (-1,)).tolist()
 
-            print(len(output), len(target))
+            assert  len(output) == len(target)
 
             for gt, pred in zip(target, output):
                 confusion_matrix[int(gt)][int(pred)] += 1
