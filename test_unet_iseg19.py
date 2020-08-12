@@ -57,11 +57,11 @@ def main():
 
     print("TESTING...")
 
-    trainer.validate_epoch(epoch)
+    trainer.validate_epoch(0)
 
     val_loss = trainer.writer.data['val']['loss'] / trainer.writer.data['val']['count']
 
-    trainer.writer.write_end_of_epoch(epoch)
+    trainer.writer.write_end_of_epoch(0)
 
     trainer.writer.reset('train')
     trainer.writer.reset('val')
