@@ -60,6 +60,7 @@ def main():
         with torch.no_grad():
             img_t1, img_t2, target = input_tuple
             
+            target = torch.reshape(target, (-1, 1, 64, 64, 64))
             img_t1 = torch.reshape(img_t1, (-1, 1, 64, 64, 64))
             img_t2 = torch.reshape(img_t2, (-1, 1, 64, 64, 64))
 
