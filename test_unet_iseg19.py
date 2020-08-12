@@ -52,7 +52,7 @@ def main():
         model = model.cuda()
         print("Model transferred in GPU.....")
 
-    trainer = train.Trainer(args, model, criterion, optimizer, train_data_loader=val_loader,
+    trainer = train.Trainer(args, model, criterion, None, train_data_loader=val_loader,
                             valid_data_loader=test_loader, lr_scheduler=None)
 
     print("TESTING...")
@@ -98,7 +98,7 @@ def get_arguments():
                         help='learning rate (default: 1e-3)')
     parser.add_argument('--split', default=0.8, type=float, help='Select percentage of training data(default: 0.8)')
     parser.add_argument('--cuda', action='store_true', default=True)
-    parser.add_argument('--loadData', default=False)
+    parser.add_argument('--loadData', default=True)
     parser.add_argument('--resume', default='', type=str, metavar='PATH',
                         help='path to latest checkpoint (default: none)')
     parser.add_argument('--model', type=str, default='UNET3D',
