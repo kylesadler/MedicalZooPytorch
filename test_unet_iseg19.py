@@ -55,6 +55,7 @@ def main():
     print("TESTING...")
 
     model.eval()
+    print('asdfad')
 
     for batch_idx, input_tuple in enumerate(test_loader):
         with torch.no_grad():
