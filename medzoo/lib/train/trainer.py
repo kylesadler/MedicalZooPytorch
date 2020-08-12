@@ -85,8 +85,8 @@ class Trainer:
 
                 output = self.model(input_tensor)
                 print(input_tensor.size())
-                print(output.size())
-                print(target.size())
+                output = torch.reshape(reshape, (-1, 1, 64, 64, 64))
+                target = torch.reshape(target, (-1, 1, 64, 64, 64))
                 loss, per_ch_score = self.criterion(output, target)
 
                 self.writer.update_scores(batch_idx, loss.item(), per_ch_score, 'val',
