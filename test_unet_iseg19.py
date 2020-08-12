@@ -64,21 +64,21 @@ def main():
             img_t2 = torch.reshape(img_t2, (-1, 1, 64, 64, 64))
 
             input_tensor = torch.cat((img_t1, img_t2), dim=1)
-            print(input_tensor.size())
+            # print(input_tensor.size())
 
             input_tensor.requires_grad = False
 
             output = model(input_tensor)
-            print(target.size())
+            # print(target.size())
             # print(output.size())
 
             loss, per_ch_score = criterion(output, target)
 
             print(loss.item(), per_ch_score)
 
-    val_loss = trainer.writer.data['val']['loss'] / trainer.writer.data['val']['count']
+    # val_loss = trainer.writer.data['val']['loss'] / trainer.writer.data['val']['count']
 
-    print(val_loss)
+    # print(val_loss)
 
 
 
