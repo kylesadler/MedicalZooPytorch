@@ -96,7 +96,7 @@ def get_arguments():
     
     # parser.add_argument('--samples_train', type=int, default=4096)
     # parser.add_argument('--samples_val', type=int, default=512)
-    parser.add_argument('--samples_train', type=int, default=1)
+    parser.add_argument('--samples_train', type=int, default=1024)
     parser.add_argument('--samples_val', type=int, default=128)
     # parser.add_argument('--samples_train', type=int, default=1)
     # parser.add_argument('--samples_val', type=int, default=1)
