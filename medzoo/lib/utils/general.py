@@ -102,6 +102,7 @@ def prepare_input(input_tuple, inModalities=-1, inChannels=-1, cuda=False, args=
                 print(img_t2.size())
 
             input_tensor = torch.cat((img_t1, img_t2), dim=1)
+            print(input_tensor.size())
 
         elif channels == 1:
             input_tensor, _, target = input_tuple
