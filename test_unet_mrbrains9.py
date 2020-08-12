@@ -58,10 +58,10 @@ def main():
         with torch.no_grad():
             img_t1, img_t2, img_t3, target = input_tuple
             
-            target = torch.reshape(target, (-1, 1, 48, 48, 48))
-            img_t1 = torch.reshape(img_t1, (-1, 1, 48, 48, 48))
-            img_t2 = torch.reshape(img_t2, (-1, 1, 48, 48, 48))
-            img_t3 = torch.reshape(img_t3, (-1, 1, 48, 48, 48))
+            target = torch.reshape(torch.from_numpy(target), (-1, 1, 48, 48, 48))
+            img_t1 = torch.reshape(torch.from_numpy(img_t1), (-1, 1, 48, 48, 48))
+            img_t2 = torch.reshape(torch.from_numpy(img_t2), (-1, 1, 48, 48, 48))
+            img_t3 = torch.reshape(torch.from_numpy(img_t3), (-1, 1, 48, 48, 48))
 
             input_tensor = torch.cat((img_t1, img_t2, img_t3), dim=1)
 
