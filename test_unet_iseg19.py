@@ -79,8 +79,8 @@ def main():
             print(target.size())
             print(output.size())
 
-            output = torch.reshape(output, (-1,))
-            target = torch.reshape(target, (-1,))
+            output = torch.reshape(output, (-1,)).tolist()
+            target = torch.reshape(target, (-1,)).tolist()
 
             for gt, pred in zip(target, output):
                 print(gt)
