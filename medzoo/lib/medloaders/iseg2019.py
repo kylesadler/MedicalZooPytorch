@@ -101,10 +101,25 @@ class MRIDatasetISEG2019(Dataset):
             self.full_volume = get_viz_set(list_IDsT1, list_IDsT2, labels, dataset_name="iseg2019")
 
         elif self.mode == 'test':
-            self.list_IDsT1 = sorted(glob.glob(os.path.join(self.testing_path, '*T1.img')))
-            self.list_IDsT2 = sorted(glob.glob(os.path.join(self.testing_path, '*T2.img')))
-            self.labels = None
+            # self.list_IDsT1 = sorted(glob.glob(os.path.join(self.testing_path, '*T1.img')))
+            # self.list_IDsT2 = sorted(glob.glob(os.path.join(self.testing_path, '*T2.img')))
+            # self.labels = None
             # todo inference here
+
+            list_IDsT1 = [ x for x in list_IDsT1 if f'-{fold_id}-' in x ]
+            list_IDsT2 = [ x for x in list_IDsT2 if f'-{fold_id}-' in x ]
+            labels = [ x for x in labels if f'-{fold_id}-' in x ]
+            assert(len(labels) == len(list_IDsT1))
+            assert(len(labels) == len(list_IDsT2))
+            assert(len(labels) == 1)
+
+            self.list = create_sub_volumes(list_IDsT1, list_IDsT2, labels, dataset_name="iseg2019",
+                                           mode=mode, samples=samples, full_vol_dim=self.full_vol_dim,
+                                           crop_size=self.crop_size,
+                                           sub_vol_path=self.sub_vol_path, th_percent=self.threshold)
+
+            self.full_volume = get_viz_set(list_IDsT1, list_IDsT2, labels, dataset_name="iseg2019")
+
 
         utils.save_list(self.save_name, self.list)
 
