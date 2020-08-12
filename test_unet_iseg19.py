@@ -55,10 +55,10 @@ def main():
     print("TESTING...")
 
     model.eval()
-    print('asdfad')
 
     for batch_idx, input_tuple in enumerate(test_loader):
         with torch.no_grad():
+            print('asdfas')
             img_t1, img_t2, target = input_tuple
             
             img_t1 = torch.reshape(img_t1, (-1, 1, 64, 64, 64))
