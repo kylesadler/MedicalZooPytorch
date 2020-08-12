@@ -1,6 +1,7 @@
 # Python medzoo.libraries
 import argparse
 import os
+import torch
 
 os.environ["CUDA_VISIBLE_DEVICES"] = "0"
 # medzoo.lib files
