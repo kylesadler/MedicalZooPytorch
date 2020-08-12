@@ -85,7 +85,7 @@ class Trainer:
 
                 output = self.model(input_tensor)
                 print(input_tensor.size())
-                output = torch.reshape(reshape, (-1, 1, 64, 64, 64))
+                output = torch.reshape(output, (-1, 1, 64, 64, 64))
                 target = torch.reshape(target, (-1, 1, 64, 64, 64))
                 loss, per_ch_score = self.criterion(output, target)
 
