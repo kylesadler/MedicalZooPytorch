@@ -70,16 +70,12 @@ def main():
             input_tensor.requires_grad = False
 
             output = model(input_tensor)
-            print(torch.max(target))
-            print(torch.min(target))
-            print(target.size())
 
-
-            print(output.size())
             output = torch.argmax(output, dim=1)
-            print(output.size())
             output = torch.reshape(output, (-1, 1, 64, 64, 64))
-            # target = torch.reshape(target, (-1, 64, 64, 64))
+
+            print(target.size())
+            print(output.size())
 
 
             loss, per_ch_score = criterion(output, target)
