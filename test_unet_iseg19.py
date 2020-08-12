@@ -4,7 +4,7 @@ import os
 
 os.environ["CUDA_VISIBLE_DEVICES"] = "0"
 # medzoo.lib files
-from medzoo.lib.medloaders import MRIDatasetISEG2019
+from medzoo.lib.medloaders import MRIDatasetISEG2019, dataset_dir
 from medzoo.lib.medzoo import UNet3D
 import medzoo.lib.train as train
 import medzoo.lib.utils as utils
@@ -20,10 +20,17 @@ def main():
     utils.reproducibility(args, seed)
     utils.make_dirs(args.save)
 
-    test_loader = MRIDatasetISEG2019(args, 'test', dataset_path=path, crop_dim=args.dim, split_id=split_idx,
-                                        samples=samples_val, load=args.loadData)
+
+    params = {'batch_size': args.batchSz,
+              'shuffle': True,
+              'num_workers': 2}
+    print(params)
+    samples_train = args.samples_train
+    samples_val = args.samples_val
+    test_loader = MRIDatasetISEG2019(args, 'test', dataset_path=dataset_dir, crop_dim=args.dim, split_id=split_idx,
+                                        samples=samples_train, load=args.loadData)
     
-    val_loader = MRIDatasetISEG2019(args, 'val', dataset_path=path, crop_dim=args.dim, split_id=split_idx,
+    val_loader = MRIDatasetISEG2019(args, 'val', dataset_path=dataset_dir, crop_dim=args.dim, split_id=split_idx,
                                         samples=samples_val, load=args.loadData)
 
 
