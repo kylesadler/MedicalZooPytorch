@@ -30,7 +30,7 @@ def main():
               'num_workers': 2}
     samples_train = args.samples_train
     samples_val = args.samples_val
-    test_loader = MRIDatasetMRBRAINS2018(args, 'test', dataset_path=dataset_dir, crop_dim=args.dim, split_id=0,
+    test_loader = MRIDatasetMRBRAINS2018(args, 'test', dataset_path=dataset_dir, dim=args.dim, split_id=0,
                                         samples=samples_train, load=args.loadData)
     
 
