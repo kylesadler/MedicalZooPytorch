@@ -58,20 +58,19 @@ def main():
 
     for batch_idx, input_tuple in enumerate(test_loader):
         with torch.no_grad():
-            print('asdfas')
             img_t1, img_t2, target = input_tuple
             
             img_t1 = torch.reshape(img_t1, (-1, 1, 64, 64, 64))
             img_t2 = torch.reshape(img_t2, (-1, 1, 64, 64, 64))
 
             input_tensor = torch.cat((img_t1, img_t2), dim=1)
-            # print(input_tensor.size())
+            print(input_tensor.size())
 
             input_tensor.requires_grad = False
 
             output = model(input_tensor)
-            # print(target.size())
-            # print(output.size())
+            print(target.size())
+            print(output.size())
 
             loss, per_ch_score = criterion(output, target)
 
