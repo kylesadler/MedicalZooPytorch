@@ -12,7 +12,7 @@ import medzoo.lib.utils as utilss
 from medzoo.lib.losses3D import DiceLoss
 from medzoo.lib import utils
 
-import pprint
+from pprint import pprint
 
 seed = 1777777
 
