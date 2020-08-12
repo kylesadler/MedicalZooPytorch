@@ -4,8 +4,8 @@ import os
 
 os.environ["CUDA_VISIBLE_DEVICES"] = "0"
 # medzoo.lib files
-import medzoo.lib.medloaders as medical_loaders
-import medzoo.lib.medzoo as medzoo
+from medzoo.lib.medloaders import MRIDatasetISEG2019
+from medzoo.lib.medzoo import UNet3D
 import medzoo.lib.train as train
 import medzoo.lib.utils as utils
 from medzoo.lib.losses3D import DiceLoss
