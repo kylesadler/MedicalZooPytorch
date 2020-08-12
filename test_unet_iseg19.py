@@ -7,8 +7,10 @@ os.environ["CUDA_VISIBLE_DEVICES"] = "0"
 from medzoo.lib.medloaders import MRIDatasetISEG2019, dataset_dir
 from medzoo.lib.medzoo import UNet3D
 import medzoo.lib.train as train
-import medzoo.lib.utils as utils
+import medzoo.lib.utils as utilss
 from medzoo.lib.losses3D import DiceLoss
+
+import pprint
 
 seed = 1777777
 
@@ -30,9 +32,6 @@ def main():
     test_loader = MRIDatasetISEG2019(args, 'test', dataset_path=dataset_dir, crop_dim=args.dim, split_id=0,
                                         samples=samples_train, load=args.loadData)
     
-    val_loader = MRIDatasetISEG2019(args, 'val', dataset_path=dataset_dir, crop_dim=args.dim, split_id=0,
-                                        samples=samples_val, load=args.loadData)
-
 
 
 
@@ -52,19 +51,35 @@ def main():
         model = model.cuda()
         print("Model transferred in GPU.....")
 
-    trainer = train.Trainer(args, model, criterion, None, train_data_loader=val_loader,
-                            valid_data_loader=test_loader, lr_scheduler=None)
-
     print("TESTING...")
 
-    trainer.validate_epoch(0)
+    model.eval()
+
+    for batch_idx, input_tuple in enumerate(test_loader):
+        with torch.no_grad():
+            img_t1, img_t2, target = input_tuple
+            
+            print(img_t1.size())
+            print(img_t2.size())
+            img_t1 = torch.reshape(img_t1, (-1, 1, 64, 64, 64))
+            img_t2 = torch.reshape(img_t2, (-1, 1, 64, 64, 64))
+            print(img_t1.size())
+            print(img_t2.size())
+
+            input_tensor = torch.cat((img_t1, img_t2), dim=1)
+            print(input_tensor.size())
+            print(target.size())
+
+            input_tensor.requires_grad = False
+
+            output = model(input_tensor)
+            loss, per_ch_score = criterion(output, target)
+
+            print(loss.item(), per_ch_score)
 
     val_loss = trainer.writer.data['val']['loss'] / trainer.writer.data['val']['count']
 
-    trainer.writer.write_end_of_epoch(0)
-
-    trainer.writer.reset('train')
-    trainer.writer.reset('val')
+    print(val_loss)
 
 
 

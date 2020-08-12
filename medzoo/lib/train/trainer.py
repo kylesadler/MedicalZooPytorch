@@ -84,11 +84,6 @@ class Trainer:
                 input_tensor.requires_grad = False
 
                 output = self.model(input_tensor)
-                print(input_tensor.size())
-                output = torch.reshape(output, (-1, 1, 64, 64, 64))
-                target = torch.reshape(target, (-1, 1, 64, 64, 64))
-                print(target.size())
-                print(output.size())
                 loss, per_ch_score = self.criterion(output, target)
 
                 self.writer.update_scores(batch_idx, loss.item(), per_ch_score, 'val',
