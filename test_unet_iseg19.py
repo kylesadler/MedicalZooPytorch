@@ -70,7 +70,7 @@ def main():
 
             output = model(input_tensor)
             print(target.size())
-            print(output.size())
+            # print(output.size())
 
             loss, per_ch_score = criterion(output, target)
 
