@@ -116,7 +116,7 @@ def get_arguments():
     parser.add_argument('--lr', default=1e-4, type=float,
                         help='learning rate (default: 1e-3)')
 
-    parser.add_argument('--fold_id', default='1', type=str, help='Select subject for fold validation')
+    parser.add_argument('--fold_id', default='148', type=str, help='Select subject for fold validation')
 
     parser.add_argument('--cuda', action='store_true', default=True)
 
