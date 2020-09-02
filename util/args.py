@@ -9,7 +9,8 @@ def datestr():
 def get_default_parser():
     parser = argparse.ArgumentParser()
 
-    parser.add_argument('--batchSz', type=int, default=8)
+    parser.add_argument('train', type=str, default='train')
+    parser.add_argument('test', type=str, default='test')
     parser.add_argument('--nEpochs', type=int, default=20000)
 
     parser.add_argument('--samples_train', type=int, default=1024)
@@ -118,4 +119,5 @@ def to_args(kwargs):
     parser = get_parser(**kwargs)
     args = parser.parse_args()
     args.save = f'/home/kyle/results/{args.model}/{args.dataset_name}_{args.fold_id}_{datestr()}'
+    print(args)
     return args
