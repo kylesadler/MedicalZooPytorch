@@ -18,6 +18,7 @@ def get_default_parser():
     parser.add_argument('--samples_val', type=int, default=128)
     # parser.add_argument('--samples_train', type=int, default=1)
     # parser.add_argument('--samples_val', type=int, default=1)
+    
 
     parser.add_argument('--model', type=str, default='UNET3D', choices=('VNET', 'VNET2', 'UNET3D', 'DENSENET1', 'DENSENET2', 'DENSENET3', 'HYPERDENSENET'))
 
@@ -27,7 +28,7 @@ def get_default_parser():
 
     parser.add_argument('--resume', default='', type=str, metavar='PATH', help='path to latest checkpoint (default: none)')
 
-    # parser.add_argument('--augmentation', default=kwargs['augmentation'], type=str, help='Tensor normalization: options max, mean, global')
+    parser.add_argument('--augmentation', default=True, type=str, help='Tensor normalization: options max, mean, global')
     parser.add_argument('--normalization', default='full_volume_mean', type=str, help='Tensor normalization: options max, mean, global')
 
     return parser
