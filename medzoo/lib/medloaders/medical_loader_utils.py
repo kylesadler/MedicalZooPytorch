@@ -1,6 +1,6 @@
 from medzoo.lib.medloaders import medical_image_process as img_loader
 from medzoo.lib.visual3D_temp import *
-
+from math import ceil
 
 def get_viz_set(*ls, dataset_name, test_subject=0, save=False, sub_vol_path=None):
     """
@@ -147,24 +147,37 @@ def create_non_overlapping_sub_volumes(*ls, dataset_name, mode, samples, full_vo
     assert total != 0, "Problem reading data. Check the data paths."
     modalities = len(ls)
     subvolume_list = []
-    for x in range(3):
-        assert full_vol_dim[x] % crop_size[x] == 0
+
+
+    # make range be a multiple of crop_size[i]
+    x_range = ceil(full_vol_dim[0] / crop_size[0]) * crop_size[0]
+    y_range = ceil(full_vol_dim[1] / crop_size[1]) * crop_size[1]
+    z_range = ceil(full_vol_dim[2] / crop_size[2]) * crop_size[2]
+
+    
 
     print('Mode: ' + mode + ' Subvolume samples to generate: ', samples, ' Volumes: ', total)
-    for x in range(0, full_vol_dim[0], crop_size[0]): # x, y, z are min coordinates of crop volume
-        for y in range(0, full_vol_dim[1], crop_size[1]):
-            for z in range(0, full_vol_dim[2], crop_size[2]):
+    for x in range(0, x_range, crop_size[0]): # x, y, z are min coordinates of crop volume
+        for y in range(0, y_range, crop_size[1]):
+            for z in range(0, z_range, crop_size[2]):
+                
+                
+                crop_x = min(full_vol_dim[0] - crop_size[0], x)
+                crop_y = min(full_vol_dim[1] - crop_size[1], y)
+                crop_z = min(full_vol_dim[2] - crop_size[2], z)
+                        
+                crop = (crop_x, crop_y, crop_z) # (int, int, int)
+
                 # generate subvolume
                 # print(i)
                 tensor_images = []
-                sample_paths = [ ls[x][0] for x in range(modalities) ] # list of paths for one subject
+                sample_paths = [ ls[i][0] for i in range(modalities) ] # list of paths for one subject
 
                 print(sample_paths)
 
                 label_path = sample_paths[-1]
                 
                 # crop = find_random_crop_dim(full_vol_dim, crop_size)
-                crop = (x, y, z) # (int, int, int)
 
                 # full_segmentation_map = img_loader.load_medical_image(label_path, viz3d=True, type='label', crop_size=crop_size, crop=crop)
 
@@ -181,7 +194,7 @@ def create_non_overlapping_sub_volumes(*ls, dataset_name, mode, samples, full_vo
 
 
                 # save subvolume
-                filename = f'{sub_vol_path}id_0_s_{i}_modality_'
+                filename = f'{sub_vol_path}id_9_s_{x}_{y}_{z}_modality_'
                 list_saved_paths = []
                 for j in range(modalities - 1):
                     f_t1 = f'{filename}{j}.npy'
@@ -193,6 +206,7 @@ def create_non_overlapping_sub_volumes(*ls, dataset_name, mode, samples, full_vo
                 list_saved_paths.append(f_seg)
 
                 subvolume_list.append(tuple(list_saved_paths))
+
 
     return subvolume_list
 
