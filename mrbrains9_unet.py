@@ -3,7 +3,7 @@ import sys
 import torch
 from pprint import pprint
 
-from util import mrbrains9_arguments, launch_train_test
+from util import mrbrains9_arguments, launch_train_test, MRBRAINS_UNET_BEST, MRBRAINS_UNET_LAST
 
 # Python medzoo.libraries
 # medzoo.lib files
@@ -18,14 +18,26 @@ import medzoo.lib.medloaders as medical_loaders
 
 os.environ["CUDA_VISIBLE_DEVICES"] = "0"
 seed = 1777777
-torch.manual_seed(seed)
 
 # from medzoo.lib import utils
 
+args = to_args({
+        'loadData': loadData,
+
+        'fold_id': 148,
+        'split': 0.9,
+        'dataset_name': "mrbrains9",
+        'dim': (48, 48, 48), # max size is (240, 240, 48)
+        'classes': 9,
+        'inChannels': 3,
+        'inModalities': 3,
+        'threshold': 0.1,
+        'lr': 1e-4
+    })
 
 
 def train():
-    args = mrbrains9_arguments(loadData=True)
+    # args = mrbrains9_arguments(loadData=True)
     print('here')
     pprint(args)
     print('there')
@@ -35,7 +47,9 @@ def train():
 
     training_generator, val_generator, full_volume, affine = medical_loaders.generate_datasets(args)
     model, optimizer = medzoo.create_model(args)
-    criterion = DiceLoss(classes=11, skip_index_after=args.classes)
+    # criterion = DiceLoss(classes=11, skip_index_after=args.classes)
+    # criterion = DiceLoss(classes=args.classes)
+    criterion = CrossEntropyLoss()
 
     if args.cuda:
         model = model.cuda()
@@ -48,7 +62,7 @@ def train():
 
 
 def test():
-    args = mrbrains9_arguments(loadData=True)
+    # args = mrbrains9_arguments(loadData=True)
 
     utils.reproducibility(args, seed)
     utils.make_dirs(args.save)

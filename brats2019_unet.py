@@ -1,7 +1,7 @@
 import os
 import sys
 import torch
-from util import brats2019_arguments, launch_train_test
+from util import brats2019_arguments, launch_train_test, BRATS_UNET_BEST, BRATS_UNET_LAST
 
 import medzoo.lib.medloaders as medical_loaders
 import medzoo.lib.medzoo as medzoo
@@ -12,19 +12,32 @@ from medzoo.lib.losses3D.dice import DiceLoss
 
 os.environ["CUDA_VISIBLE_DEVICES"] = "2"
 seed = 1777777
-torch.manual_seed(seed)
 
+args = to_args({
+        'fold_id': fold_id,
+        'loadData': loadData,
+        'split': 0.9,
 
+        'dataset_name': "brats2019",
+        'dim': (64, 64, 64),
+        'classes': 3, # whole tumor, enhanced tumor, tumor core
+        'inChannels': 4,
+        'inModalities': 4,
+        'threshold': 0.1,
+        'lr': 1e-4
+        })
 
 def train():
-    args = brats2019_arguments()
+    # args = brats2019_arguments()
 
     utils.reproducibility(args, seed)
     utils.make_dirs(args.save)
 
     training_generator, val_generator, full_volume, affine = medical_loaders.generate_datasets(args)
     model, optimizer = medzoo.create_model(args)
-    criterion = DiceLoss(classes=3, skip_index_after=args.classes)
+    # criterion = DiceLoss(classes=3, skip_index_after=args.classes)
+    # criterion = DiceLoss(classes=args.classes)
+    criterion = CrossEntropyLoss()
 
     if args.cuda:
         model = model.cuda()

@@ -1,4 +1,10 @@
+import time
 import argparse
+
+def datestr():
+    now = time.gmtime()
+    return '{:02}-{:02}_{:02}-{:02}'.format(now.tm_mday, now.tm_mon, now.tm_hour, now.tm_min)
+
 
 def get_default_parser():
     parser = argparse.ArgumentParser()
@@ -45,7 +51,7 @@ def get_parser(**kwargs):
 
     return parser
 
-# mrbrains9
+""" 
 def mrbrains9_arguments(loadData=False):
     """ loadData=False to recompute data
         loadData=True to use data on disk
@@ -65,7 +71,6 @@ def mrbrains9_arguments(loadData=False):
         'lr': 1e-4
     })
 
-
 def iseg2019_arguments(loadData):
 
     return to_args({
@@ -81,7 +86,6 @@ def iseg2019_arguments(loadData):
         'threshold': 0.0001,
         'lr': 1e-3
     })
-
 
 def brats2019_arguments(fold_id, loadData):
 
@@ -100,20 +104,12 @@ def brats2019_arguments(fold_id, loadData):
         'threshold': 0.1,
         'lr': 1e-4
     })
+ """
 
 
 def to_args(kwargs):
 
     parser = get_parser(**kwargs)
     args = parser.parse_args()
-    args.save = f'/home/kyle/results/{args.model}/{args.dataset_name}_{args.fold_id}_{utils.datestr()}'
+    args.save = f'/home/kyle/results/{args.model}/{args.dataset_name}_{args.fold_id}_{datestr()}'
     return args
-
-
-def launch_train_test(train, test, sysargs):
-    if sysargs[1] == 'train':
-        train()
-    elif sysargs[1] == 'test':
-        test()
-    else:
-        raise ValueError('first argument must be train or test')
