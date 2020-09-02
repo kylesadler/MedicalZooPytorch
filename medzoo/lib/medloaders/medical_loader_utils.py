@@ -173,7 +173,7 @@ def create_non_overlapping_sub_volumes(*ls, dataset_name, mode, samples, full_vo
                 tensor_images = []
                 sample_paths = [ ls[i][0] for i in range(modalities) ] # list of paths for one subject
 
-                print(sample_paths)
+                # print(sample_paths)
 
                 label_path = sample_paths[-1]
                 

@@ -15,7 +15,7 @@ seed = 1777777
 
 args = to_args({
         'fold_id': '1', # train / test split happens in brats2019.py
-        'loadData': loadData,
+        'loadData': False,
         'split': 0.9,
 
         'dataset_name': "brats2019",
