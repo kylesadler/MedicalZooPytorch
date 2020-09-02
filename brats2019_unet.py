@@ -5,7 +5,7 @@ from util import to_args, launch_train_test, BRATS_UNET_BEST, BRATS_UNET_LAST
 
 import medzoo.lib.medloaders as medical_loaders
 import medzoo.lib.medzoo as medzoo
-import medzoo.lib.train as train
+import medzoo.lib.train as train_module
 # medzoo.lib files
 import medzoo.lib.utils as utils
 from medzoo.lib.losses3D.dice import DiceLoss
@@ -44,7 +44,7 @@ def train():
         model = model.cuda()
         print("Model transferred in GPU.....")
 
-    trainer = train.Trainer(args, model, criterion, optimizer, train_data_loader=training_generator,
+    trainer = train_module.Trainer(args, model, criterion, optimizer, train_data_loader=training_generator,
                             valid_data_loader=val_generator, lr_scheduler=None)
     print("START TRAINING...")
     trainer.training()
