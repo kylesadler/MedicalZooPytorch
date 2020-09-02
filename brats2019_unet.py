@@ -14,7 +14,7 @@ os.environ["CUDA_VISIBLE_DEVICES"] = "2"
 seed = 1777777
 
 args = to_args({
-        'fold_id': fold_id,
+        'fold_id': '1', # train / test split happens in brats2019.py
         'loadData': loadData,
         'split': 0.9,
 

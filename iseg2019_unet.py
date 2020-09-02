@@ -19,7 +19,7 @@ seed = 1777777
 
 
 args = to_args({
-        'loadData': loadData,
+        'loadData': True, # maybe should be true??
 
         'fold_id': 9,
         'split': 0.8,
