@@ -121,5 +121,4 @@ def to_args(kwargs):
     parser = get_parser(**kwargs)
     args = parser.parse_args()
     args.save = f'/home/kyle/results/{args.model}/{args.dataset_name}_{args.fold_id}_{datestr()}'
-    print(args)
     return args
