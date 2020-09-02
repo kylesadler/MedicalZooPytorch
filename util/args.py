@@ -9,8 +9,10 @@ def datestr():
 def get_default_parser():
     parser = argparse.ArgumentParser()
 
-    parser.add_argument('--mode', type=str, default='test')
+    parser.add_argument('train', type=str, default='train')
+    parser.add_argument('test', type=str, default='test')
     parser.add_argument('--nEpochs', type=int, default=20000)
+    parser.add_argument('--batchSz', type=int, default=8)
 
     parser.add_argument('--samples_train', type=int, default=1024)
     parser.add_argument('--samples_val', type=int, default=128)
