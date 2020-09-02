@@ -8,7 +8,7 @@ from torch.utils.data import Dataset
 import medzoo.lib.augment3D as augment3D
 import medzoo.lib.utils as utils
 from medzoo.lib.medloaders import medical_image_process as img_loader
-from medzoo.lib.medloaders.medical_loader_utils import create_sub_volumes
+from medzoo.lib.medloaders.medical_loader_utils import create_sub_volumes, create_non_overlapping_sub_volumes
 
 
 class MICCAIBraTS2019(Dataset):
@@ -119,13 +119,21 @@ class MICCAIBraTS2019(Dataset):
                                            dataset_name="brats2019", mode=mode, samples=samples,
                                            full_vol_dim=self.full_vol_dim, crop_size=self.crop_size,
                                            sub_vol_path=self.sub_vol_path, th_percent=self.threshold)
+            
         elif self.mode == 'test':
-            self.list_IDsT1 = sorted(glob.glob(os.path.join(self.testing_path, '*GG/*/*t1.nii.gz')))
-            self.list_IDsT1ce = sorted(glob.glob(os.path.join(self.testing_path, '*GG/*/*t1ce.nii.gz')))
-            self.list_IDsT2 = sorted(glob.glob(os.path.join(self.testing_path, '*GG/*/*t2.nii.gz')))
-            self.list_IDsFlair = sorted(glob.glob(os.path.join(self.testing_path, '*GG/*/*_flair.nii.gz')))
-            self.labels = None
-            # Todo inference code here
+            # self.list_IDsT1 = sorted(glob.glob(os.path.join(self.testing_path, '*GG/*/*t1.nii.gz')))
+            # self.list_IDsT1ce = sorted(glob.glob(os.path.join(self.testing_path, '*GG/*/*t1ce.nii.gz')))
+            # self.list_IDsT2 = sorted(glob.glob(os.path.join(self.testing_path, '*GG/*/*t2.nii.gz')))
+            # self.list_IDsFlair = sorted(glob.glob(os.path.join(self.testing_path, '*GG/*/*_flair.nii.gz')))
+            # self.labels = None
+
+            list_IDsT1 = HGG_IDsT1[hgg_split:] + LGG_IDsT1[hgg_split:]
+            list_IDsT1ce = HGG_IDsT1ce[hgg_split:] + LGG_IDsT1ce[hgg_split:]
+            list_IDsT2 = HGG_IDsT2[hgg_split:] + LGG_IDsT2[hgg_split:]
+            list_IDsFlair = HGG_IDsFlair[hgg_split:] + LGG_IDsFlair[hgg_split:]
+            labels = HGG_labels[hgg_split:] + LGG_labels[hgg_split:]
+            
+            self.list = create_non_overlapping_sub_volumes(list_IDsT1, list_IDsT1ce, list_IDsT2, list_IDsFlair, labels, dataset_name="brats2019", mode=mode, samples=samples, full_vol_dim=self.full_vol_dim, crop_size=self.crop_size, sub_vol_path=self.sub_vol_path, th_percent=self.threshold)
 
         utils.save_list(self.save_name, self.list)
 

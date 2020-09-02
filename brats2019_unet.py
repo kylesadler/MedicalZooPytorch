@@ -1,7 +1,7 @@
 import os
 import sys
 import torch
-from util import brats2019_arguments, launch_train_test, BRATS_UNET_BEST, BRATS_UNET_LAST
+from util import to_args, launch_train_test, BRATS_UNET_BEST, BRATS_UNET_LAST
 
 import medzoo.lib.medloaders as medical_loaders
 import medzoo.lib.medzoo as medzoo
@@ -37,7 +37,8 @@ def train():
     model, optimizer = medzoo.create_model(args)
     # criterion = DiceLoss(classes=3, skip_index_after=args.classes)
     # criterion = DiceLoss(classes=args.classes)
-    criterion = CrossEntropyLoss()
+    criterion = torch.nn.CrossEntropyLoss()
+
 
     if args.cuda:
         model = model.cuda()

@@ -8,7 +8,7 @@ from torch.utils.data import Dataset
 import medzoo.lib.augment3D as augment3D
 import medzoo.lib.utils as utils
 from medzoo.lib.medloaders import medical_image_process as img_loader
-from medzoo.lib.medloaders.medical_loader_utils import get_viz_set, create_sub_volumes
+from medzoo.lib.medloaders.medical_loader_utils import get_viz_set, create_sub_volumes, create_non_overlapping_sub_volumes
 
 class MRIDatasetISEG2019(Dataset):
     """
@@ -112,11 +112,8 @@ class MRIDatasetISEG2019(Dataset):
             assert(len(labels) == len(list_IDsT1))
             assert(len(labels) == len(list_IDsT2))
             assert(len(labels) == 1)
-
-            self.list = create_sub_volumes(list_IDsT1, list_IDsT2, labels, dataset_name="iseg2019",
-                                           mode=mode, samples=samples, full_vol_dim=self.full_vol_dim,
-                                           crop_size=self.crop_size,
-                                           sub_vol_path=self.sub_vol_path, th_percent=self.threshold)
+            
+            self.list = create_non_overlapping_sub_volumes(list_IDsT1, list_IDsT2, labels, dataset_name="iseg2019", mode=mode, samples=samples, full_vol_dim=self.full_vol_dim, crop_size=self.crop_size, sub_vol_path=self.sub_vol_path, th_percent=self.threshold)
 
             self.full_volume = get_viz_set(list_IDsT1, list_IDsT2, labels, dataset_name="iseg2019")
 

@@ -3,7 +3,7 @@ import sys
 import torch
 from pprint import pprint
 
-from util import mrbrains9_arguments, launch_train_test, MRBRAINS_UNET_BEST, MRBRAINS_UNET_LAST
+from util import to_args, launch_train_test, MRBRAINS_UNET_BEST, MRBRAINS_UNET_LAST
 
 # Python medzoo.libraries
 # medzoo.lib files
@@ -49,7 +49,7 @@ def train():
     model, optimizer = medzoo.create_model(args)
     # criterion = DiceLoss(classes=11, skip_index_after=args.classes)
     # criterion = DiceLoss(classes=args.classes)
-    criterion = CrossEntropyLoss()
+    criterion = torch.nn.CrossEntropyLoss()
 
     if args.cuda:
         model = model.cuda()

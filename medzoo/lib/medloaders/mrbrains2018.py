@@ -6,7 +6,7 @@ from torch.utils.data import Dataset
 
 import medzoo.lib.utils as utils
 from medzoo.lib.medloaders import medical_image_process as img_loader
-from medzoo.lib.medloaders.medical_loader_utils import create_sub_volumes
+from medzoo.lib.medloaders.medical_loader_utils import create_sub_volumes, create_non_overlapping_sub_volumes
 from medzoo.lib.medloaders.medical_loader_utils import get_viz_set
 
 
@@ -20,8 +20,8 @@ class MRIDatasetMRBRAINS2018(Dataset):
         self.mode = mode
         self.root = dataset_path
         self.classes = classes
-        dataset_name = "mrbrains" + str(classes)
-        self.training_path = self.root + '/mrbrains_2018/training'
+        dataset_name = f'mrbrains{classes}'
+        self.training_path = os.path.join(self.root, 'mrbrains_2018', 'training')
         self.dirs = os.listdir(self.training_path)
         self.samples = samples
         self.list = []
@@ -34,9 +34,7 @@ class MRIDatasetMRBRAINS2018(Dataset):
         self.list_reg_t1 = []
         self.labels = []
         self.full_volume = None
-        self.save_name = self.root + '/mrbrains_2018/training/mrbrains_2018-classes-' + str(
-            classes) + '-list-' + mode + '-samples-' + str(
-            samples) + '.txt'
+        self.save_name = os.path.join(self.training_path, f'mrbrains_2018-classes-{classes}-list-{mode}-samples-{samples}.txt')
 
         list_reg_t1 = sorted(glob.glob(os.path.join(self.training_path, '*/pr*/*g_T1.nii.gz')))
         list_reg_ir = sorted(glob.glob(os.path.join(self.training_path, '*/pr*/*g_IR.nii.gz')))
@@ -50,8 +48,7 @@ class MRIDatasetMRBRAINS2018(Dataset):
             self.list = utils.load_list(self.save_name)
             return
 
-        subvol = '_vol_' + str(dim[0]) + 'x' + str(dim[1]) + 'x' + str(dim[2])
-        self.sub_vol_path = self.root + '/mrbrains_2018/generated/' + mode + subvol + '/'
+        self.sub_vol_path = os.path.join(self.root, 'mrbrains_2018', 'generated', f'{mode}_vol_{dim[0]}x{dim[1]}x{dim[2]}') + '/'
         utils.make_dirs(self.sub_vol_path)
 
 
@@ -92,17 +89,24 @@ class MRIDatasetMRBRAINS2018(Dataset):
             assert len(labels) == len(list_flair)
             assert len(labels) == 6
         else:
-            labels = [ x for x in labels if f'/{fold_id}/' in x]
-            list_reg_t1 = [ x for x in list_reg_t1 if f'/{fold_id}/' in x]
-            list_reg_ir = [ x for x in list_reg_ir if f'/{fold_id}/' in x]
-            list_flair = [ x for x in list_flair if f'/{fold_id}/' in x]
+            labels = [ x for x in labels if f'/{fold_id}/' in x ]
+            list_reg_t1 = [ x for x in list_reg_t1 if f'/{fold_id}/' in x ]
+            list_reg_ir = [ x for x in list_reg_ir if f'/{fold_id}/' in x ]
+            list_flair = [ x for x in list_flair if f'/{fold_id}/' in x ]
 
             assert len(labels) == len(list_reg_t1)
             assert len(labels) == len(list_reg_ir)
             assert len(labels) == len(list_flair)
             assert len(labels) == 1
 
-        self.list = create_sub_volumes(list_reg_t1, list_reg_ir, list_flair, labels,
+        if mode == 'test':
+            self.list = create_non_overlapping_sub_volumes(list_reg_t1, list_reg_ir, list_flair, labels,
+                                       dataset_name=dataset_name, mode=mode,
+                                       samples=samples, full_vol_dim=self.full_vol_size,
+                                       crop_size=self.crop_dim, sub_vol_path=self.sub_vol_path,
+                                       th_percent=self.threshold)
+        else:
+            self.list = create_sub_volumes(list_reg_t1, list_reg_ir, list_flair, labels,
                                        dataset_name=dataset_name, mode=mode,
                                        samples=samples, full_vol_dim=self.full_vol_size,
                                        crop_size=self.crop_dim, sub_vol_path=self.sub_vol_path,

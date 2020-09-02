@@ -78,7 +78,7 @@ def create_sub_volumes(*ls, dataset_name, mode, samples, full_vol_dim, crop_size
     total = len(ls[0])
     assert total != 0, "Problem reading data. Check the data paths."
     modalities = len(ls)
-    list = []
+    volume_list = []
     # print(modalities)
     # print(ls[2])
 
@@ -124,9 +124,77 @@ def create_sub_volumes(*ls, dataset_name, mode, samples, full_vol_dim, crop_size
 
         np.save(f_seg, segmentation_map)
         list_saved_paths.append(f_seg)
-        list.append(tuple(list_saved_paths))
+        volume_list.append(tuple(list_saved_paths))
 
-    return list
+    return volume_list
+    
+def create_non_overlapping_sub_volumes(*ls, dataset_name, mode, samples, full_vol_dim, crop_size, sub_vol_path, normalization='max_min',
+                       th_percent=0.1):
+    """ returns list of non overlapping subvolumes. Also this codebase is hella shitty -_-
+
+    :param ls: list of modality paths, where the last path is the segmentation map
+    :param dataset_name: which dataset is used
+    :param mode: train/val
+    :param samples: train/val samples to generate
+    :param full_vol_dim: full image size
+    :param crop_size: train volume size
+    :param sub_vol_path: path for the particular patient
+    :param th_percent: the % of the croped dim that corresponds to non-zero labels
+    :param crop_type:
+    :return:
+    """
+    total = len(ls[0]) # total is 0 because only one subject
+    assert total != 0, "Problem reading data. Check the data paths."
+    modalities = len(ls)
+    subvolume_list = []
+    for x in range(3):
+        assert full_vol_dim[x] % crop_size[x] == 0
+
+    print('Mode: ' + mode + ' Subvolume samples to generate: ', samples, ' Volumes: ', total)
+    for x in range(0, full_vol_dim[0], crop_size[0]): # x, y, z are min coordinates of crop volume
+        for y in range(0, full_vol_dim[1], crop_size[1]):
+            for z in range(0, full_vol_dim[2], crop_size[2]):
+                # generate subvolume
+                # print(i)
+                tensor_images = []
+                sample_paths = [ ls[x][0] for x in range(modalities) ] # list of paths for one subject
+
+                print(sample_paths)
+
+                label_path = sample_paths[-1]
+                
+                # crop = find_random_crop_dim(full_vol_dim, crop_size)
+                crop = (x, y, z) # (int, int, int)
+
+                # full_segmentation_map = img_loader.load_medical_image(label_path, viz3d=True, type='label', crop_size=crop_size, crop=crop)
+
+                # full_segmentation_map = fix_seg_map(full_segmentation_map, dataset_name)
+                # print(full_segmentation_map.shape)
+
+                # if find_non_zero_labels_mask(full_segmentation_map, th_percent, crop_size, crop):
+                segmentation_map = img_loader.load_medical_image(label_path, type='label', crop_size=crop_size, crop=crop)
+                segmentation_map = fix_seg_map(segmentation_map, dataset_name)
+                for j in range(modalities - 1):
+                    img_tensor = img_loader.load_medical_image(sample_paths[j], type="T1", normalization=normalization, crop_size=crop_size, crop=crop)
+
+                    tensor_images.append(img_tensor)
+
+
+                # save subvolume
+                filename = f'{sub_vol_path}id_0_s_{i}_modality_'
+                list_saved_paths = []
+                for j in range(modalities - 1):
+                    f_t1 = f'{filename}{j}.npy'
+                    np.save(f_t1, tensor_images[j])
+                    list_saved_paths.append(f_t1)
+
+                f_seg = f'{filename}seg.npy'
+                np.save(f_seg, segmentation_map)
+                list_saved_paths.append(f_seg)
+
+                subvolume_list.append(tuple(list_saved_paths))
+
+    return subvolume_list
 
 
 def get_all_sub_volumes(*ls, dataset_name, mode, samples, full_vol_dim, crop_size, sub_vol_path,
@@ -144,15 +212,13 @@ def get_all_sub_volumes(*ls, dataset_name, mode, samples, full_vol_dim, crop_siz
 
         tensor_images = []
         for modality_id in range(modalities - 1):
-            img_tensor = img_loader.medical_image_transform(
-                img_loader.load_medical_image(ls[modality_id][vol_id], type="T1"),
-                normalization=normalization)
+            img_tensor = img_loader.medical_image_transform(img_loader.load_medical_image(ls[modality_id][vol_id], type="T1"),normalization=normalization)
 
             img_tensor = generate_padded_subvolumes(img_tensor, kernel_dim=crop_size)
 
             tensor_images.append(img_tensor)
-        segmentation_map = img_loader.medical_image_transform(
-            img_loader.load_medical_image(ls[modalities - 1][vol_id], viz3d=True, type='label'))
+        
+        segmentation_map = img_loader.medical_image_transform(img_loader.load_medical_image(ls[modalities - 1][vol_id], viz3d=True, type='label'))
         segmentation_map = generate_padded_subvolumes(segmentation_map, kernel_dim=crop_size)
 
         filename = sub_vol_path + 'id_' + str(vol_id) + '_s_' + str(modality_id) + '_modality_'
@@ -206,7 +272,7 @@ def find_random_crop_dim(full_vol_dim, crop_size):
     assert full_vol_dim[2] >= crop_size[2], "crop size is too big"
 
     if full_vol_dim[0] == crop_size[0]:
-        slices = crop_size[0]
+        slices = crop_size[0] # this seems like a bug??
     else:
         slices = np.random.randint(full_vol_dim[0] - crop_size[0])
 

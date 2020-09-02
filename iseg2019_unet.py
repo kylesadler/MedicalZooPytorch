@@ -3,7 +3,7 @@ import sys
 import torch
 
 from pprint import pprint
-from util import iseg2019_arguments, launch_train_test, ISEG_UNET_BEST, ISEG_UNET_LAST
+from util import to_args, launch_train_test, ISEG_UNET_BEST, ISEG_UNET_LAST
 
 import medzoo.lib.medloaders as medical_loaders
 import medzoo.lib.medzoo as medzoo
@@ -44,7 +44,8 @@ def train():
 
     model, optimizer = medzoo.create_model(args)
     # criterion = DiceLoss(classes=args.classes)
-    criterion = CrossEntropyLoss()
+    criterion = torch.nn.CrossEntropyLoss()
+
 
     if args.cuda:
         model = model.cuda()

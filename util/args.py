@@ -53,9 +53,8 @@ def get_parser(**kwargs):
 
 """ 
 def mrbrains9_arguments(loadData=False):
-    """ loadData=False to recompute data
+        loadData=False to recompute data
         loadData=True to use data on disk
-    """
 
     return to_args({
         'loadData': loadData,
@@ -108,7 +107,14 @@ def brats2019_arguments(fold_id, loadData):
 
 
 def to_args(kwargs):
+    """ generates argparse arguments from a keyword configuration dict
 
+    Args:
+        kwargs (dict): dictionary of keyword arguments to pass to get_parser()
+
+    Returns:
+        argparse arguments: configuration arguments
+    """        
     parser = get_parser(**kwargs)
     args = parser.parse_args()
     args.save = f'/home/kyle/results/{args.model}/{args.dataset_name}_{args.fold_id}_{datestr()}'

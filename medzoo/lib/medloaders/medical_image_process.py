@@ -64,6 +64,7 @@ def medical_image_transform(img_tensor, type=None,
 
 
 def crop_img(img_tensor, crop_size, crop):
+    """ crops img_tensor to crop_size size image from crop. crop is (x, y, z) of lowest coordinates"""
     if crop_size[0] == 0:
         return img_tensor
     slices_crop, w_crop, h_crop = crop
@@ -77,16 +78,13 @@ def crop_img(img_tensor, crop_size, crop):
         img_tensor = img_tensor[0, ...]
 
     if full_dim1 == dim1:
-        img_tensor = img_tensor[:, w_crop:w_crop + dim2,
-                     h_crop:h_crop + dim3]
+        img_tensor = img_tensor[:, w_crop:w_crop + dim2, h_crop:h_crop + dim3]
     elif full_dim2 == dim2:
-        img_tensor = img_tensor[slices_crop:slices_crop + dim1, :,
-                     h_crop:h_crop + dim3]
+        img_tensor = img_tensor[slices_crop:slices_crop + dim1, :, h_crop:h_crop + dim3]
     elif full_dim3 == dim3:
         img_tensor = img_tensor[slices_crop:slices_crop + dim1, w_crop:w_crop + dim2, :]
     else:
-        img_tensor = img_tensor[slices_crop:slices_crop + dim1, w_crop:w_crop + dim2,
-                     h_crop:h_crop + dim3]
+        img_tensor = img_tensor[slices_crop:slices_crop + dim1, w_crop:w_crop + dim2, h_crop:h_crop + dim3]
 
     if inp_img_dim == 4:
         return img_tensor.unsqueeze(0)
