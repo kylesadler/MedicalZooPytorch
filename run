@@ -1,0 +1,20 @@
+cd /home/kyle/MedicalZooPytorch
+git pull
+
+log_file=logs/$1.nohup
+rm $log_file
+nohup python $1.py $2 > $log_file 2>&1 &
+
+# usage for training
+# run iseg2019_unet train test
+
+# usage for testing
+# run iseg2019_unet test train
+
+
+
+# for i in {1..10}
+# do
+#     echo $i
+#     nohup python train_unet_iseg19.py --fold_id $i > unet_iseg19_$i.nohup 2>&1
+# done

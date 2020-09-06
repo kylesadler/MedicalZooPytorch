@@ -53,7 +53,7 @@ def train():
         affine,
     ) = medical_loaders.generate_datasets(args)
     model, optimizer = medzoo.create_model(args)
-    # criterion = DiceLoss(classes=11, skip_index_after=args.classes)
+    val_criterion = DiceLoss(classes=11, skip_index_after=args.classes)
     # criterion = DiceLoss(classes=args.classes)
     criterion = torch.nn.CrossEntropyLoss()
 
@@ -66,6 +66,7 @@ def train():
         model,
         criterion,
         optimizer,
+        val_criterion=val_criterion,
         train_data_loader=training_generator,
         valid_data_loader=val_generator,
         lr_scheduler=None,
