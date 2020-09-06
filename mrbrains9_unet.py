@@ -23,7 +23,7 @@ seed = 1777777
 
 args = to_args(
     {
-        "loadData": loadData,
+        "loadData": False,
         "fold_id": 148,
         "split": 0.9,
         "dataset_name": "mrbrains9",
