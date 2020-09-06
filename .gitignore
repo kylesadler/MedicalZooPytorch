@@ -1,9 +1,10 @@
 __pycache__/
-*.nohup
 medzoo/datasets/
 runs/
 results/
+logs/
 
 .vscode
 
 nohup.*
+*.nohup
