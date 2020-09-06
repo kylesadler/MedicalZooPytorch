@@ -79,8 +79,8 @@ class Trainer:
 
             # output = output.type(torch.LongTensor)
             target = target.type(torch.LongTensor).cuda()
-            print(output.type())
-            print(target.type())
+            print(output.size(), output.type())
+            print(target.size(), target.type())
             loss_dice, per_ch_score = self.criterion(output, target)
             loss_dice.backward()
             self.optimizer.step()
