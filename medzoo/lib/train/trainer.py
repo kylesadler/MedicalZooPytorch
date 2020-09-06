@@ -76,6 +76,9 @@ class Trainer:
             # torch.Size([8, 3, 48, 48, 48])
             input_tensor.requires_grad = True
             output = self.model(input_tensor)
+
+            output = output.type(torch.LongTensor)
+            target = target.type(torch.LongTensor)
             print(output.type())
             print(target.type())
             loss_dice, per_ch_score = self.criterion(output, target)
