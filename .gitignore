@@ -5,3 +5,5 @@ runs/
 results/
 
 .vscode
+
+nohup.*
