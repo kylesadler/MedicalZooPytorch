@@ -100,17 +100,12 @@ class MRIDatasetMRBRAINS2018(Dataset):
             assert len(labels) == 1
 
         if mode == 'test':
-            self.list = create_non_overlapping_sub_volumes(list_reg_t1, list_reg_ir, list_flair, labels,
-                                       dataset_name=dataset_name, mode=mode,
+            self.list = create_non_overlapping_sub_volumes(list_reg_t1, list_reg_ir, list_flair, labels, dataset_name=dataset_name, mode=mode,
                                        samples=samples, full_vol_dim=self.full_vol_size,
                                        crop_size=self.crop_dim, sub_vol_path=self.sub_vol_path,
                                        th_percent=self.threshold)
         else:
-            self.list = create_sub_volumes(list_reg_t1, list_reg_ir, list_flair, labels,
-                                       dataset_name=dataset_name, mode=mode,
-                                       samples=samples, full_vol_dim=self.full_vol_size,
-                                       crop_size=self.crop_dim, sub_vol_path=self.sub_vol_path,
-                                       th_percent=self.threshold)
+            self.list = create_sub_volumes(list_reg_t1, list_reg_ir, list_flair, labels, dataset_name=dataset_name, mode=mode, samples=samples, full_vol_dim=self.full_vol_size, crop_size=self.crop_dim, sub_vol_path=self.sub_vol_path, th_percent=self.threshold)
 
         utils.save_list(self.save_name, self.list)
 
