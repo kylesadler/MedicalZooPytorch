@@ -23,9 +23,16 @@ def get_viz_set(*ls, dataset_name, test_subject=0, save=False, sub_vol_path=None
     if save:
         total_subvolumes = total_volumes[0].shape[0]
         for i in range(total_subvolumes):
-            filename = sub_vol_path + 'id_' + str(test_subject) + '_VIZ_' + str(i) + '_modality_'
+            filename = (
+                sub_vol_path
+                + "id_"
+                + str(test_subject)
+                + "_VIZ_"
+                + str(i)
+                + "_modality_"
+            )
             for j in range(modalities):
-                filename = filename + str(j) + '.npy'
+                filename = filename + str(j) + ".npy"
                 np.save(filename, total_volumes[j][i])
     else:
         return torch.stack(total_volumes, dim=0)
@@ -61,8 +68,17 @@ def fix_seg_map(segmentation_map, dataset="iseg2017"):
     return segmentation_map
 
 
-def create_sub_volumes(*ls, dataset_name, mode, samples, full_vol_dim, crop_size, sub_vol_path, normalization='max_min',
-                       th_percent=0.1):
+def create_sub_volumes(
+    *ls,
+    dataset_name,
+    mode,
+    samples,
+    full_vol_dim,
+    crop_size,
+    sub_vol_path,
+    normalization="max_min",
+    th_percent=0.1,
+):
     """
 
     :param ls: list of modality paths, where the last path is the segmentation map
@@ -83,7 +99,12 @@ def create_sub_volumes(*ls, dataset_name, mode, samples, full_vol_dim, crop_size
     # print(modalities)
     # print(ls[2])
 
-    print('Mode: ' + mode + ' Subvolume samples to generate: ', samples, ' Volumes: ', total)
+    print(
+        "Mode: " + mode + " Subvolume samples to generate: ",
+        samples,
+        " Volumes: ",
+        total,
+    )
     for i in range(samples):
         # print(i)
         random_index = np.random.randint(total)
@@ -95,33 +116,43 @@ def create_sub_volumes(*ls, dataset_name, mode, samples, full_vol_dim, crop_size
         while True:
             label_path = sample_paths[-1]
             crop = find_random_crop_dim(full_vol_dim, crop_size)
-            full_segmentation_map = img_loader.load_medical_image(label_path, viz3d=True, type='label',
-                                                                  crop_size=crop_size,
-                                                                  crop=crop)
+            full_segmentation_map = img_loader.load_medical_image(
+                label_path, viz3d=True, type="label", crop_size=crop_size, crop=crop
+            )
 
             full_segmentation_map = fix_seg_map(full_segmentation_map, dataset_name)
             # print(full_segmentation_map.shape)
-            if find_non_zero_labels_mask(full_segmentation_map, th_percent, crop_size, crop):
-                segmentation_map = img_loader.load_medical_image(label_path, type='label', crop_size=crop_size,
-                                                                 crop=crop)
+            if find_non_zero_labels_mask(
+                full_segmentation_map, th_percent, crop_size, crop
+            ):
+                segmentation_map = img_loader.load_medical_image(
+                    label_path, type="label", crop_size=crop_size, crop=crop
+                )
                 segmentation_map = fix_seg_map(segmentation_map, dataset_name)
                 for j in range(modalities - 1):
-                    img_tensor = img_loader.load_medical_image(sample_paths[j], type="T1", normalization=normalization,
-                                                               crop_size=crop_size, crop=crop)
+                    img_tensor = img_loader.load_medical_image(
+                        sample_paths[j],
+                        type="T1",
+                        normalization=normalization,
+                        crop_size=crop_size,
+                        crop=crop,
+                    )
 
                     tensor_images.append(img_tensor)
 
                 break
 
-        filename = sub_vol_path + 'id_' + str(random_index) + '_s_' + str(i) + '_modality_'
+        filename = (
+            sub_vol_path + "id_" + str(random_index) + "_s_" + str(i) + "_modality_"
+        )
         list_saved_paths = []
         for j in range(modalities - 1):
-            f_t1 = filename + str(j) + '.npy'
+            f_t1 = filename + str(j) + ".npy"
             list_saved_paths.append(f_t1)
 
             np.save(f_t1, tensor_images[j])
 
-        f_seg = filename + 'seg.npy'
+        f_seg = filename + "seg.npy"
 
         np.save(f_seg, segmentation_map)
         list_saved_paths.append(f_seg)
@@ -129,10 +160,19 @@ def create_sub_volumes(*ls, dataset_name, mode, samples, full_vol_dim, crop_size
 
     return volume_list
 
-    
-def create_non_overlapping_sub_volumes(*ls, dataset_name, mode, samples, full_vol_dim, crop_size, sub_vol_path, normalization='max_min',
-                       th_percent=0.1):
-    """ returns list of non overlapping subvolumes. Also this codebase is hella shitty -_-
+
+def create_non_overlapping_sub_volumes(
+    *ls,
+    dataset_name,
+    mode,
+    samples,
+    full_vol_dim,
+    crop_size,
+    sub_vol_path,
+    normalization="max_min",
+    th_percent=0.1,
+):
+    """returns list of non overlapping subvolumes. Also this codebase is hella shitty -_-
 
     :param ls: list of modality paths, where the last path is the segmentation map
     :param dataset_name: which dataset is used
@@ -155,50 +195,70 @@ def create_non_overlapping_sub_volumes(*ls, dataset_name, mode, samples, full_vo
     y_range = ceil(full_vol_dim[1] / crop_size[1]) * crop_size[1]
     z_range = ceil(full_vol_dim[2] / crop_size[2]) * crop_size[2]
 
-    print('Mode: ' + mode + ' Subvolume samples to generate: ', samples, ' Volumes: ', total)
-    for x in range(0, x_range, crop_size[0]):  # x, y, z are min coordinates of crop volume
+    print(
+        "Mode: " + mode + " Subvolume samples to generate: ",
+        samples,
+        " Volumes: ",
+        total,
+    )
+    # x, y, z are min coordinates of crop volume
+    for x in range(0, x_range, crop_size[0]):
         for y in range(0, y_range, crop_size[1]):
             for z in range(0, z_range, crop_size[2]):
-                
+
                 crop_x = min(full_vol_dim[0] - crop_size[0], x)
                 crop_y = min(full_vol_dim[1] - crop_size[1], y)
                 crop_z = min(full_vol_dim[2] - crop_size[2], z)
-                        
+
                 crop = (crop_x, crop_y, crop_z)  # (int, int, int)
 
                 # generate subvolume
                 # print(i)
                 tensor_images = []
-                sample_paths = [ ls[i][0] for i in range(modalities) ]  # list of paths for one subject
+                sample_paths = [
+                    ls[i][0] for i in range(modalities)
+                ]  # list of paths for one subject
 
                 # print(sample_paths)
 
                 label_path = sample_paths[-1]
-                
+
                 # crop = find_random_crop_dim(full_vol_dim, crop_size)
 
-                full_segmentation_map = img_loader.load_medical_image(label_path, viz3d=True, type='label', crop_size=crop_size, crop=crop)
+                full_segmentation_map = img_loader.load_medical_image(
+                    label_path, viz3d=True, type="label", crop_size=crop_size, crop=crop
+                )
 
                 full_segmentation_map = fix_seg_map(full_segmentation_map, dataset_name)
                 # print(full_segmentation_map.shape)
 
-                if find_non_zero_labels_mask(full_segmentation_map, th_percent, crop_size, crop):
-                    segmentation_map = img_loader.load_medical_image(label_path, type='label', crop_size=crop_size, crop=crop)
+                if find_non_zero_labels_mask(
+                    full_segmentation_map, th_percent, crop_size, crop
+                ):
+                    segmentation_map = img_loader.load_medical_image(
+                        label_path, type="label", crop_size=crop_size, crop=crop
+                    )
                     segmentation_map = fix_seg_map(segmentation_map, dataset_name)
                     for j in range(modalities - 1):
-                        img_tensor = img_loader.load_medical_image(sample_paths[j], type="T1", normalization=normalization, crop_size=crop_size, crop=crop)
+                        img_tensor = img_loader.load_medical_image(
+                            sample_paths[j],
+                            type="T1",
+                            normalization=normalization,
+                            crop_size=crop_size,
+                            crop=crop,
+                        )
 
                         tensor_images.append(img_tensor)
 
                 # save subvolume
-                filename = f'{sub_vol_path}id_9_s_{x}_{y}_{z}_modality_'
+                filename = f"{sub_vol_path}id_9_s_{x}_{y}_{z}_modality_"
                 list_saved_paths = []
                 for j in range(modalities - 1):
-                    f_t1 = f'{filename}{j}.npy'
+                    f_t1 = f"{filename}{j}.npy"
                     np.save(f_t1, tensor_images[j])
                     list_saved_paths.append(f_t1)
 
-                f_seg = f'{filename}seg.npy'
+                f_seg = f"{filename}seg.npy"
                 np.save(f_seg, segmentation_map)
                 list_saved_paths.append(f_seg)
 
@@ -207,8 +267,16 @@ def create_non_overlapping_sub_volumes(*ls, dataset_name, mode, samples, full_vo
     return subvolume_list
 
 
-def get_all_sub_volumes(*ls, dataset_name, mode, samples, full_vol_dim, crop_size, sub_vol_path,
-                        normalization='max_min'):
+def get_all_sub_volumes(
+    *ls,
+    dataset_name,
+    mode,
+    samples,
+    full_vol_dim,
+    crop_size,
+    sub_vol_path,
+    normalization="max_min",
+):
     # TODO
     # 1.) gia ola tas subject fortwnwn image kai target
     # 2.) call generate_non_overlapping_volumes gia na kanw to image kai target sub_volumnes patches
@@ -222,27 +290,38 @@ def get_all_sub_volumes(*ls, dataset_name, mode, samples, full_vol_dim, crop_siz
 
         tensor_images = []
         for modality_id in range(modalities - 1):
-            img_tensor = img_loader.medical_image_transform(img_loader.load_medical_image(ls[modality_id][vol_id], type="T1"), normalization=normalization)
+            img_tensor = img_loader.medical_image_transform(
+                img_loader.load_medical_image(ls[modality_id][vol_id], type="T1"),
+                normalization=normalization,
+            )
 
             img_tensor = generate_padded_subvolumes(img_tensor, kernel_dim=crop_size)
 
             tensor_images.append(img_tensor)
-        
-        segmentation_map = img_loader.medical_image_transform(img_loader.load_medical_image(ls[modalities - 1][vol_id], viz3d=True, type='label'))
-        segmentation_map = generate_padded_subvolumes(segmentation_map, kernel_dim=crop_size)
 
-        filename = sub_vol_path + 'id_' + str(vol_id) + '_s_' + str(modality_id) + '_modality_'
+        segmentation_map = img_loader.medical_image_transform(
+            img_loader.load_medical_image(
+                ls[modalities - 1][vol_id], viz3d=True, type="label"
+            )
+        )
+        segmentation_map = generate_padded_subvolumes(
+            segmentation_map, kernel_dim=crop_size
+        )
+
+        filename = (
+            sub_vol_path + "id_" + str(vol_id) + "_s_" + str(modality_id) + "_modality_"
+        )
 
         list_saved_paths = []
         # print(len(tensor_images[0]))
         for k in range(len(tensor_images[0])):
             for j in range(modalities - 1):
-                f_t1 = filename + str(j) + '_sample_{}'.format(str(k).zfill(8)) + '.npy'
+                f_t1 = filename + str(j) + "_sample_{}".format(str(k).zfill(8)) + ".npy"
                 list_saved_paths.append(f_t1)
                 # print(f_t1,tensor_images[j][k].shape)
                 np.save(f_t1, tensor_images[j])
 
-            f_seg = filename + 'seg_sample_{}'.format(str(k).zfill(8)) + '.npy'
+            f_seg = filename + "seg_sample_{}".format(str(k).zfill(8)) + ".npy"
             # print(f_seg)
             np.save(f_seg, segmentation_map)
             list_saved_paths.append(f_seg)
@@ -259,9 +338,14 @@ def generate_padded_subvolumes(full_volume, kernel_dim=(32, 32, 32)):
     kc, kh, kw = kernel_dim
     dc, dh, dw = kernel_dim  # stride
     # Pad to multiples of kernel_dim
-    a = ((roundup(W, kw) - W) // 2 + W % 2, (roundup(W, kw) - W) // 2,
-         (roundup(H, kh) - H) // 2 + H % 2, (roundup(H, kh) - H) // 2,
-         (roundup(D, kc) - D) // 2 + D % 2, (roundup(D, kc) - D) // 2)
+    a = (
+        (roundup(W, kw) - W) // 2 + W % 2,
+        (roundup(W, kw) - W) // 2,
+        (roundup(H, kh) - H) // 2 + H % 2,
+        (roundup(H, kh) - H) // 2,
+        (roundup(D, kc) - D) // 2 + D % 2,
+        (roundup(D, kc) - D) // 2,
+    )
     # print('padding ', a)
     x = F.pad(x, a)
     # print('padded shape ', x.shape)

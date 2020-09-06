@@ -54,21 +54,17 @@ class BaseModel(nn.Module, ABC):
         except RuntimeError:
             ckpt_dict = torch.load(ckpt_file, map_location=lambda storage, loc: storage)
         # Restore model weights
-        self.load_state_dict(ckpt_dict['model_state_dict'])
+        self.load_state_dict(ckpt_dict["model_state_dict"])
 
         # Restore optimizer status if existing. Evaluation doesn't need this
         # TODO return optimizer?????
         if optimizer:
-            optimizer.load_state_dict(ckpt_dict['optimizer_state_dict'])
+            optimizer.load_state_dict(ckpt_dict["optimizer_state_dict"])
 
         # Return global step
-        return ckpt_dict['epoch']
+        return ckpt_dict["epoch"]
 
-    def save_checkpoint(self,
-                        directory,
-                        epoch, loss,
-                        optimizer=None,
-                        name=None):
+    def save_checkpoint(self, directory, epoch, loss, optimizer=None, name=None):
         r"""
         Saves checkpoint at a certain global step during training. Optimizer state
         is also saved together.
@@ -88,25 +84,21 @@ class BaseModel(nn.Module, ABC):
 
         # Build checkpoint dict to save.
         ckpt_dict = {
-            'model_state_dict':
-                self.state_dict(),
-            'optimizer_state_dict':
-                optimizer.state_dict() if optimizer is not None else None,
-            'epoch':
-                epoch
+            "model_state_dict": self.state_dict(),
+            "optimizer_state_dict": optimizer.state_dict()
+            if optimizer is not None
+            else None,
+            "epoch": epoch,
         }
 
         # Save the file with specific name
         if name is None:
-            name = "{}_{}_epoch.pth".format(
-                os.path.basename(directory),  # netD or netG
-                'last')
+            name = f"{os.path.basename(directory)}_last_epoch.pth"
 
         torch.save(ckpt_dict, os.path.join(directory, name))
         if self.best_loss > loss:
             self.best_loss = loss
-            name = "{}_BEST.pth".format(
-                os.path.basename(directory))
+            name = f"{os.path.basename(directory)}_BEST.pth"
             torch.save(ckpt_dict, os.path.join(directory, name))
 
     def count_params(self):
@@ -121,8 +113,9 @@ class BaseModel(nn.Module, ABC):
 
         """
         num_total_params = sum(p.numel() for p in self.parameters())
-        num_trainable_params = sum(p.numel() for p in self.parameters()
-                                   if p.requires_grad)
+        num_trainable_params = sum(
+            p.numel() for p in self.parameters() if p.requires_grad
+        )
 
         return num_total_params, num_trainable_params
 
