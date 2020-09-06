@@ -77,7 +77,7 @@ class Trainer:
             input_tensor.requires_grad = True
             output = self.model(input_tensor)
 
-            output = output.type(torch.LongTensor)
+            # output = output.type(torch.LongTensor)
             target = target.type(torch.LongTensor)
             print(output.type())
             print(target.type())
