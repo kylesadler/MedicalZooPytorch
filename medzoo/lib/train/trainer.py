@@ -76,6 +76,8 @@ class Trainer:
             # torch.Size([8, 3, 48, 48, 48])
             input_tensor.requires_grad = True
             output = self.model(input_tensor)
+            print(output)
+            print(target)
             loss_dice, per_ch_score = self.criterion(output, target)
             loss_dice.backward()
             self.optimizer.step()
