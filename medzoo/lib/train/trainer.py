@@ -92,7 +92,9 @@ class Trainer:
             # loss_dice, per_ch_score = self.criterion(output, target)
             loss_dice = self.criterion(output, target)
             per_ch_score = loss_dice
-            
+            print(loss_dice)
+            print(per_ch_score)
+
             loss_dice.backward()
             self.optimizer.step()
 
