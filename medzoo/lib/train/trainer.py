@@ -81,6 +81,7 @@ class Trainer:
             target = target.type(torch.LongTensor).cuda()
             print(output.size(), output.type(), torch.min(output).item(), torch.max(output).item())
             print(target.size(), target.type(), torch.min(target).item(), torch.max(target).item())
+            print(self.criterion)
 
             loss_dice, per_ch_score = self.criterion(output, target)
             loss_dice.backward()
