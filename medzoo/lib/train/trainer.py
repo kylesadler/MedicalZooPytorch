@@ -85,15 +85,15 @@ class Trainer:
 
             """
             target = target.type(torch.LongTensor).cuda()
-            print(output.size(), output.type(), torch.min(output).item(), torch.max(output).item())
-            print(target.size(), target.type(), torch.min(target).item(), torch.max(target).item())
-            print(self.criterion)
+            # print(output.size(), output.type(), torch.min(output).item(), torch.max(output).item())
+            # print(target.size(), target.type(), torch.min(target).item(), torch.max(target).item())
+            # print(self.criterion)
 
             # loss_dice, per_ch_score = self.criterion(output, target)
             loss_dice = self.criterion(output, target)
             per_ch_score = [loss_dice.item()]
-            print(loss_dice)
-            print(per_ch_score)
+            # print(loss_dice)
+            # print(per_ch_score)
 
             loss_dice.backward()
             self.optimizer.step()
@@ -124,7 +124,8 @@ class Trainer:
 
                 output = self.model(input_tensor)
                 # loss, per_ch_score = self.criterion(output, target)
-                loss, per_ch_score = self.val_criterion(output, target)
+                loss = self.criterion(output, target)
+                per_ch_score = [loss.item()]
 
                 self.writer.update_scores(
                     batch_idx,
