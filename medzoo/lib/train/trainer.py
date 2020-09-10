@@ -78,12 +78,21 @@ class Trainer:
             output = self.model(input_tensor)
 
             # output = output.type(torch.LongTensor)
+            """
+            
+            torch.Size([8, 3, 64, 64, 64]) torch.cuda.FloatTensor tensor(-4.6913, device='cuda:0', grad_fn=<MinBackward1>) tensor(6.2169, device='cuda:0', grad_fn=<MaxBackward1>)
+            torch.Size([8, 64, 64, 64]) torch.cuda.LongTensor tensor(0, device='cuda:0') tensor(2, device='cuda:0')
+
+            """
             target = target.type(torch.LongTensor).cuda()
             print(output.size(), output.type(), torch.min(output).item(), torch.max(output).item())
             print(target.size(), target.type(), torch.min(target).item(), torch.max(target).item())
             print(self.criterion)
 
-            loss_dice, per_ch_score = self.criterion(output, target)
+            # loss_dice, per_ch_score = self.criterion(output, target)
+            loss_dice = self.criterion(output, target)
+            per_ch_score = loss_dice
+            
             loss_dice.backward()
             self.optimizer.step()
 
